@@ -22,8 +22,8 @@ export default function DeleteEventButton({ id }: { id: string }) {
                 const data = await res.json();
                 alert(`Failed to delete event: ${data.details || data.error || 'Unknown error'}`);
             }
-        } catch (err) {
-            alert('Error deleting event');
+        } catch (err: any) {
+            alert(`Error deleting event: ${err.message || 'Unknown error'}`);
         } finally {
             setLoading(false);
         }

@@ -49,10 +49,11 @@ export default function NewEvent() {
                 router.push('/admin/events');
                 router.refresh();
             } else {
-                alert('Failed to create event');
+                const data = await res.json();
+                alert(`Failed to create event: ${data.details || data.error || 'Unknown error'}`);
             }
-        } catch (err) {
-            alert('Error creating event');
+        } catch (err: any) {
+            alert(`Error creating event: ${err.message || 'Unknown error'}`);
         } finally {
             setLoading(false);
         }
