@@ -19,7 +19,8 @@ export default function DeleteEventButton({ id }: { id: string }) {
             if (res.ok) {
                 router.refresh();
             } else {
-                alert('Failed to delete event');
+                const data = await res.json();
+                alert(`Failed to delete event: ${data.details || data.error || 'Unknown error'}`);
             }
         } catch (err) {
             alert('Error deleting event');
