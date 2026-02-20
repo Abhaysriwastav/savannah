@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { FiCalendar, FiImage, FiLogOut, FiHome, FiHeart, FiTarget, FiLayers } from 'react-icons/fi';
+import { FiCalendar, FiImage, FiLogOut, FiHome, FiHeart, FiTarget, FiLayers, FiMail } from 'react-icons/fi';
 import styles from './admin.module.css';
 
 export default function AdminLayout({
@@ -44,6 +44,11 @@ export default function AdminLayout({
                     <Link href="/admin/headers" className={styles.navItem}>
                         <FiLayers className={styles.icon} />
                         <span>Manage Page Headers</span>
+                    </Link>
+
+                    <Link href="/admin/messages" className={styles.navItem}>
+                        <FiMail className={styles.icon} />
+                        <span>Manage Inquiries</span>
                     </Link>
 
                     <div className={styles.divider}></div>

@@ -70,3 +70,13 @@ model PageHeader {
   imageUrl       String
   updatedAt      DateTime @updatedAt
 }
+
+model ContactMessage {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  email     String
+  subject   String
+  message   String
+  status    String   @default("new") // 'new', 'read', 'replied'
+  createdAt DateTime @default(now())
+}

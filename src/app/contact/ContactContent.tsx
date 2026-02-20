@@ -1,7 +1,8 @@
 'use client';
 
+import { useState } from "react";
 import styles from "./contact.module.css";
-import { FiMapPin, FiPhone, FiMail } from "react-icons/fi";
+import { FiMapPin, FiPhone, FiMail, FiSend, FiCheckCircle, FiAlertCircle } from "react-icons/fi";
 import { useLanguage } from "@/context/LanguageContext";
 
 interface ContactContentProps {
@@ -10,6 +11,41 @@ interface ContactContentProps {
 
 export default function ContactContent({ headerImageUrl }: ContactContentProps) {
     const { t } = useLanguage();
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        subject: '',
+        message: ''
+    });
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [status, setStatus] = useState<{ type: 'success' | 'error' | '', text: string }>({ type: '', text: '' });
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setIsSubmitting(true);
+        setStatus({ type: '', text: '' });
+
+        try {
+            const res = await fetch('/api/contact', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData),
+            });
+
+            const data = await res.json();
+
+            if (res.ok) {
+                setStatus({ type: 'success', text: t('contact.successMsg') || 'Thank you! Your message has been sent.' });
+                setFormData({ name: '', email: '', subject: '', message: '' });
+            } else {
+                setStatus({ type: 'error', text: data.error || 'Something went wrong. Please try again.' });
+            }
+        } catch (error) {
+            setStatus({ type: 'error', text: 'Network error. Please check your connection.' });
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
 
     return (
         <div className={styles.main}>
@@ -52,27 +88,70 @@ export default function ContactContent({ headerImageUrl }: ContactContentProps) 
                         </div>
                     </div>
 
-                    {/* Contact Form Placeholder */}
+                    {/* Contact Form */}
                     <div className={`${styles.formContainer} glass-panel`}>
                         <h2>{t('contact.sendMessage')}</h2>
-                        <form className={styles.form}>
+
+                        {status.text && (
+                            <div className={`${styles.statusMsg} ${styles[status.type]}`}>
+                                {status.type === 'success' ? <FiCheckCircle /> : <FiAlertCircle />}
+                                {status.text}
+                            </div>
+                        )}
+
+                        <form className={styles.form} onSubmit={handleSubmit}>
                             <div className={styles.formGroup}>
                                 <label htmlFor="name">{t('contact.fullName')}</label>
-                                <input type="text" id="name" placeholder={t('contact.placeholderName')} required />
+                                <input
+                                    type="text"
+                                    id="name"
+                                    placeholder={t('contact.placeholderName')}
+                                    required
+                                    value={formData.name}
+                                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                                />
                             </div>
                             <div className={styles.formGroup}>
                                 <label htmlFor="email">{t('contact.emailAddress')}</label>
-                                <input type="email" id="email" placeholder={t('contact.placeholderEmail')} required />
+                                <input
+                                    type="email"
+                                    id="email"
+                                    placeholder={t('contact.placeholderEmail')}
+                                    required
+                                    value={formData.email}
+                                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                />
                             </div>
                             <div className={styles.formGroup}>
                                 <label htmlFor="subject">{t('contact.subject')}</label>
-                                <input type="text" id="subject" placeholder={t('contact.placeholderSubject')} required />
+                                <input
+                                    type="text"
+                                    id="subject"
+                                    placeholder={t('contact.placeholderSubject')}
+                                    required
+                                    value={formData.subject}
+                                    onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                                />
                             </div>
                             <div className={styles.formGroup}>
                                 <label htmlFor="message">{t('contact.message')}</label>
-                                <textarea id="message" rows={5} placeholder={t('contact.placeholderMessage')} required></textarea>
+                                <textarea
+                                    id="message"
+                                    rows={5}
+                                    placeholder={t('contact.placeholderMessage')}
+                                    required
+                                    value={formData.message}
+                                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                                ></textarea>
                             </div>
-                            <button type="submit" className="btn btn-primary" style={{ width: '100%' }}>{t('contact.sendBtn')}</button>
+                            <button
+                                type="submit"
+                                className="btn btn-primary"
+                                style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}
+                                disabled={isSubmitting}
+                            >
+                                {isSubmitting ? 'Sending...' : <><FiSend /> {t('contact.sendBtn')}</>}
+                            </button>
                         </form>
                     </div>
                 </div>
