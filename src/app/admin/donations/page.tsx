@@ -10,7 +10,7 @@ interface DonationSettings {
     iban: string;
     bic: string;
     whatsappPhone: string;
-    imageUrl: string;
+    headerImageUrl: string;
     totalCount: number;
 }
 
@@ -28,9 +28,11 @@ export default function AdminDonations() {
         iban: '',
         bic: '',
         whatsappPhone: '',
-        imageUrl: ''
+        imageUrl: '',
+        headerImageUrl: ''
     });
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
+    const [selectedHeaderFile, setSelectedHeaderFile] = useState<File | null>(null);
 
     useEffect(() => {
         fetchSettings();
@@ -48,7 +50,8 @@ export default function AdminDonations() {
                     iban: data.iban || '',
                     bic: data.bic || '',
                     whatsappPhone: data.whatsappPhone || '',
-                    imageUrl: data.imageUrl || ''
+                    imageUrl: data.imageUrl || '',
+                    headerImageUrl: data.headerImageUrl || ''
                 });
             }
         } catch (error) {
@@ -68,6 +71,12 @@ export default function AdminDonations() {
         }
     };
 
+    const handleHeaderFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files[0]) {
+            setSelectedHeaderFile(e.target.files[0]);
+        }
+    };
+
     const handleSaveSettings = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsSaving(true);
@@ -75,30 +84,38 @@ export default function AdminDonations() {
 
         try {
             let finalImageUrl = formData.imageUrl;
+            let finalHeaderImageUrl = formData.headerImageUrl;
 
-            // Upload new image if selected
+            // Upload Content Image
             if (selectedFile) {
                 const uploadData = new FormData();
                 uploadData.append('images', selectedFile);
-                const uploadRes = await fetch('/api/upload', {
-                    method: 'POST',
-                    body: uploadData
-                });
-
+                const uploadRes = await fetch('/api/upload', { method: 'POST', body: uploadData });
                 if (uploadRes.ok) {
                     const data = await uploadRes.json();
                     finalImageUrl = Array.isArray(data) ? data[0].url : data.url;
-                } else {
-                    throw new Error("Failed to upload image.");
+                }
+            }
+
+            // Upload Header Image
+            if (selectedHeaderFile) {
+                const uploadData = new FormData();
+                uploadData.append('images', selectedHeaderFile);
+                const uploadRes = await fetch('/api/upload', { method: 'POST', body: uploadData });
+                if (uploadRes.ok) {
+                    const data = await uploadRes.json();
+                    finalHeaderImageUrl = Array.isArray(data) ? data[0].url : data.url;
                 }
             }
 
             const res = await fetch('/api/donations', {
                 method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ ...formData, imageUrl: finalImageUrl }),
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    ...formData,
+                    imageUrl: finalImageUrl,
+                    headerImageUrl: finalHeaderImageUrl
+                }),
             });
 
             if (res.ok) {
@@ -193,14 +210,23 @@ export default function AdminDonations() {
                     <div className={styles.cardBody}>
                         <form onSubmit={handleSaveSettings} className={styles.form}>
                             <div className={styles.formGroup}>
-                                <label>Donation Page Cover Image</label>
+                                <label>Page Header Background Image</label>
+                                {formData.headerImageUrl && !selectedHeaderFile && (
+                                    <div style={{ marginBottom: '10px' }}>
+                                        <img src={formData.headerImageUrl} alt="Current Header" style={{ width: '100%', maxWidth: '300px', borderRadius: '8px', objectFit: 'cover', aspectRatio: '21/9' }} />
+                                    </div>
+                                )}
+                                <input type="file" accept="image/*" onChange={handleHeaderFileChange} />
+                            </div>
+
+                            <div className={styles.formGroup}>
+                                <label>Donation Page Content Image</label>
                                 {formData.imageUrl && !selectedFile && (
                                     <div style={{ marginBottom: '10px' }}>
-                                        <img src={formData.imageUrl} alt="Current Cover" style={{ width: '100%', maxWidth: '300px', borderRadius: '8px', objectFit: 'cover', aspectRatio: '16/9' }} />
+                                        <img src={formData.imageUrl} alt="Current Content" style={{ width: '100%', maxWidth: '300px', borderRadius: '8px', objectFit: 'cover', aspectRatio: '16/9' }} />
                                     </div>
                                 )}
                                 <input type="file" accept="image/*" onChange={handleFileChange} />
-                                <small style={{ color: 'var(--text-secondary)' }}>Leave empty to keep current image.</small>
                             </div>
 
                             <hr style={{ margin: 'var(--spacing-md) 0', border: 'none', borderTop: '1px solid var(--border)' }} />

@@ -5,15 +5,19 @@ import { useLanguage } from "@/context/LanguageContext";
 
 interface AboutContentProps {
     storyImageUrl?: string | null;
+    headerImageUrl?: string | null;
 }
 
-export default function AboutContent({ storyImageUrl }: AboutContentProps) {
+export default function AboutContent({ storyImageUrl, headerImageUrl }: AboutContentProps) {
     const { t } = useLanguage();
 
     return (
         <div className={styles.main}>
             {/* Page Header */}
-            <section className={styles.pageHeader}>
+            <section
+                className={styles.pageHeader}
+                style={headerImageUrl ? { backgroundImage: `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(${headerImageUrl})`, backgroundSize: 'cover', backgroundPosition: 'center' } : {}}
+            >
                 <div className="container text-center animate-fade-in">
                     <h1>{t('about.header')}</h1>
                     <p className={styles.subtitle}>{t('about.subtitle')}</p>

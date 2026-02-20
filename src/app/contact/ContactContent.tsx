@@ -4,13 +4,20 @@ import styles from "./contact.module.css";
 import { FiMapPin, FiPhone, FiMail } from "react-icons/fi";
 import { useLanguage } from "@/context/LanguageContext";
 
-export default function ContactContent() {
+interface ContactContentProps {
+    headerImageUrl?: string | null;
+}
+
+export default function ContactContent({ headerImageUrl }: ContactContentProps) {
     const { t } = useLanguage();
 
     return (
         <div className={styles.main}>
             {/* Page Header */}
-            <section className={styles.pageHeader}>
+            <section
+                className={styles.pageHeader}
+                style={headerImageUrl ? { backgroundImage: `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(${headerImageUrl})`, backgroundSize: 'cover', backgroundPosition: 'center' } : {}}
+            >
                 <div className="container text-center animate-fade-in">
                     <h1>{t('contact.header')}</h1>
                     <p className={styles.subtitle}>{t('contact.subtitle')}</p>

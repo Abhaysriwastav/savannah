@@ -30,12 +30,14 @@ export async function PUT(request: Request) {
                 where: { id: existing.id },
                 data: {
                     storyImageUrl: data.storyImageUrl,
+                    headerImageUrl: data.headerImageUrl,
                 },
             });
         } else {
             settings = await prisma.aboutSettings.create({
                 data: {
                     storyImageUrl: data.storyImageUrl,
+                    headerImageUrl: data.headerImageUrl,
                 },
             });
         }

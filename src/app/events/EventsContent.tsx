@@ -8,15 +8,19 @@ import { useLanguage } from "@/context/LanguageContext";
 
 interface EventsContentProps {
     events: any[];
+    headerImageUrl?: string | null;
 }
 
-export default function EventsContent({ events }: EventsContentProps) {
+export default function EventsContent({ events, headerImageUrl }: EventsContentProps) {
     const { t } = useLanguage();
 
     return (
         <div className={styles.main}>
             {/* Page Header */}
-            <section className={styles.pageHeader}>
+            <section
+                className={styles.pageHeader}
+                style={headerImageUrl ? { backgroundImage: `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(${headerImageUrl})`, backgroundSize: 'cover', backgroundPosition: 'center' } : {}}
+            >
                 <div className="container text-center animate-fade-in">
                     <h1>{t('events.title')}</h1>
                     <p className={styles.subtitle}>{t('events.joinDifference')}</p>

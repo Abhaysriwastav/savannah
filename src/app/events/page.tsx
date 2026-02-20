@@ -11,5 +11,9 @@ export default async function Events() {
         },
     });
 
-    return <EventsContent events={events} />;
+    const headerSettings = await prisma.pageHeader.findUnique({
+        where: { page: 'events' }
+    });
+
+    return <EventsContent events={events} headerImageUrl={headerSettings?.imageUrl} />;
 }

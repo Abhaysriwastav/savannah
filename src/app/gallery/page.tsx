@@ -10,5 +10,9 @@ export default async function Gallery() {
         },
     });
 
-    return <GalleryContent images={images} />;
+    const headerSettings = await prisma.pageHeader.findUnique({
+        where: { page: 'gallery' }
+    });
+
+    return <GalleryContent images={images} headerImageUrl={headerSettings?.imageUrl} />;
 }

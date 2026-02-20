@@ -11,14 +11,14 @@ interface DonationsContentProps {
 export default function DonationsContent({ settings }: DonationsContentProps) {
     const { t } = useLanguage();
 
-    const heroImage = settings.imageUrl || "/uploads/default-donation-hero.png";
+    const heroImage = settings.headerImageUrl || settings.imageUrl || "/uploads/default-donation-hero.png";
     const whatsappMessage = encodeURIComponent("Hello Savannah United Berlin, I have just made a donation and attached my receipt. Please verify!");
-    const whatsappUrl = `https://wa.me/${settings.whatsappPhone.replace(/\\D/g, '')}?text=${whatsappMessage}`;
+    const whatsappUrl = `https://wa.me/${settings.whatsappPhone.replace(/\D/g, '')}?text=${whatsappMessage}`;
 
     return (
         <div className={styles.main}>
             {/* Dynamic Hero Section */}
-            <section className={styles.heroSection} style={{ backgroundImage: `url(${heroImage})` }}>
+            <section className={styles.heroSection} style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(${heroImage})` }}>
                 <div className={styles.heroOverlay}></div>
                 <div className={`container ${styles.heroContent} animate-fade-in`}>
                     <h1>{t('donations.header')}</h1>

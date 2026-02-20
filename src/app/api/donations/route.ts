@@ -40,7 +40,8 @@ export async function PUT(request: NextRequest) {
                     iban: body.iban,
                     bic: body.bic,
                     whatsappPhone: body.whatsappPhone,
-                    imageUrl: body.imageUrl
+                    imageUrl: body.imageUrl,
+                    headerImageUrl: body.headerImageUrl
                 }
             });
         } else {
@@ -51,7 +52,8 @@ export async function PUT(request: NextRequest) {
                     iban: body.iban,
                     bic: body.bic,
                     whatsappPhone: body.whatsappPhone,
-                    imageUrl: body.imageUrl
+                    imageUrl: body.imageUrl,
+                    headerImageUrl: body.headerImageUrl
                 }
             });
         }

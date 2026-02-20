@@ -40,6 +40,7 @@ model DonationSettings {
   bic           String   @default("XXXXX")
   whatsappPhone String   @default("+49000000000") // Format with country code for wa.me
   imageUrl      String?  
+  headerImageUrl String?
   totalCount    Int      @default(0)
   updatedAt     DateTime @updatedAt
 }
@@ -59,5 +60,13 @@ model Project {
 model AboutSettings {
   id            String   @id @default(auto()) @map("_id") @db.ObjectId
   storyImageUrl String?
+  headerImageUrl String?
   updatedAt     DateTime @updatedAt
+}
+
+model PageHeader {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  page           String   @unique // 'events', 'projects', 'gallery', 'contact'
+  imageUrl       String
+  updatedAt      DateTime @updatedAt
 }
