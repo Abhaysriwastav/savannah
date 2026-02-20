@@ -6,7 +6,7 @@ import { put } from '@vercel/blob';
 // Optional: Security check utility
 async function checkAuth() {
     const cookieStore = await cookies();
-    const token = cookieStore.get('savannah_admin_session');
+    const token = cookieStore.get('savannah_session');
     if (!token) throw new Error('Unauthorized');
 }
 

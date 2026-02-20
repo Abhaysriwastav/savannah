@@ -6,7 +6,7 @@ import { put } from '@vercel/blob';
 export async function POST(request: Request) {
     try {
         const cookieStore = await cookies();
-        const token = cookieStore.get('savannah_admin_session');
+        const token = cookieStore.get('savannah_session');
         if (!token) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
         const formData = await request.formData();

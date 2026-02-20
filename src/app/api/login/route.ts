@@ -44,27 +44,23 @@ export async function POST(request: Request) {
             { expiresIn: '1d' }
         );
 
-        // Create the cookie strings manually for absolute control
-        const sessionCookie = `savannah_admin_session=${token}; HttpOnly; Secure; SameSite=Lax; Max-Age=${60 * 60 * 24}; Path=/`;
-        const debugCookie = `savannah_debug_flag=exists; Secure; SameSite=Lax; Max-Age=${60 * 60 * 24}; Path=/`;
+        // Set cookie using official next/headers helper
+        const cookieStore = await cookies();
+        cookieStore.set('savannah_session', token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'lax',
+            maxAge: 60 * 60 * 24, // 1 day
+            path: '/',
+        });
 
-        // Set response with explicit headers
-        const response = NextResponse.json(
+        return NextResponse.json(
             { success: true },
             {
                 status: 200,
-                headers: {
-                    'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
-                }
+                headers: { 'Cache-Control': 'no-store, no-cache, must-revalidate' }
             }
         );
-
-        response.headers.append('Set-Cookie', sessionCookie);
-        response.headers.append('Set-Cookie', debugCookie);
-
-        console.log('API Login: Set-Cookie headers appended manually');
-
-        return response;
     } catch (error) {
         console.error('Login error:', error);
         return NextResponse.json(
