@@ -99,10 +99,10 @@ export default function EditProject() {
                 setSelectedFile(null); // Clear selection
             } else {
                 const data = await res.json();
-                setMessage({ type: 'error', text: data.error || 'Failed to update project.' });
+                setMessage({ type: 'error', text: data.details || data.error || 'Failed to update project.' });
             }
-        } catch (error) {
-            setMessage({ type: 'error', text: 'An unexpected error occurred.' });
+        } catch (error: any) {
+            setMessage({ type: 'error', text: `An error occurred: ${error.message || 'Unknown error'}` });
         } finally {
             setIsSaving(false);
             router.refresh();
