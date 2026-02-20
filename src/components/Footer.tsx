@@ -4,8 +4,11 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import styles from './Footer.module.css';
 
+import { useLanguage } from '@/context/LanguageContext';
+
 export default function Footer() {
     const pathname = usePathname();
+    const { t } = useLanguage();
 
     if (pathname.startsWith('/admin') || pathname === '/login') {
         return null;
@@ -20,28 +23,27 @@ export default function Footer() {
                         <Link href="/" className={styles.logo}>
                             <img src="/logo.png" alt="Savannah United Logo" width={45} height={45} style={{ objectFit: 'contain' }} />
                             <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1.1 }}>
-                                <span className={styles.primaryText}>Savannah</span>
-                                <span className={styles.secondaryText}>United</span>
+                                <span className={styles.primaryText}>{t('nav.brand').split(' ')[0]}</span>
+                                <span className={styles.secondaryText}>{t('nav.brand').split(' ')[1]}</span>
                             </div>
                         </Link>
                         <p className={styles.description}>
-                            A nonprofit organization driven by the passion for Socio-economic integration
-                            and Humanitarian aids to the needy.
+                            {t('footer.desc')}
                         </p>
                     </div>
 
                     <div className={styles.linksColumn}>
-                        <h3 className={styles.columnTitle}>Quick Links</h3>
+                        <h3 className={styles.columnTitle}>{t('footer.quickLinks')}</h3>
                         <ul className={styles.linkList}>
-                            <li><Link href="/about-us">About Us</Link></li>
-                            <li><Link href="/events">Events</Link></li>
-                            <li><Link href="/gallery">Gallery</Link></li>
-                            <li><Link href="/contact">Contact Us</Link></li>
+                            <li><Link href="/about-us">{t('common.aboutUs')}</Link></li>
+                            <li><Link href="/events">{t('common.events')}</Link></li>
+                            <li><Link href="/gallery">{t('common.gallery')}</Link></li>
+                            <li><Link href="/contact">{t('common.contactUs')}</Link></li>
                         </ul>
                     </div>
 
                     <div className={styles.contactColumn}>
-                        <h3 className={styles.columnTitle}>Contact Us</h3>
+                        <h3 className={styles.columnTitle}>{t('footer.contactInfo')}</h3>
                         <ul className={styles.contactList}>
                             <li>
                                 <strong>Phone:</strong> <br />(+49)15-2102-85342
@@ -58,7 +60,7 @@ export default function Footer() {
                 </div>
 
                 <div className={styles.bottomBar}>
-                    <p>&copy; {new Date().getFullYear()} Savannah United Berlin e.V. All rights reserved.</p>
+                    <p>&copy; {new Date().getFullYear()} {t('nav.brand')} Berlin e.V. {t('footer.rights')}</p>
                     <Link href="/login" className={styles.adminLink}>Admin Login</Link>
                 </div>
             </div>

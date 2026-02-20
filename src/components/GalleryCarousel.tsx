@@ -1,13 +1,11 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
-import styles from './GalleryCarousel.module.css';
-import { FiChevronLeft, FiChevronRight, FiArrowRight } from 'react-icons/fi';
-import Link from 'next/link';
+import { useLanguage } from '@/context/LanguageContext';
 
 type Image = { id: string; url: string; title: string | null };
 
 export default function GalleryCarousel({ images }: { images: Image[] }) {
+    const { t } = useLanguage();
     const [currentIndex, setCurrentIndex] = useState(0);
     const [visibleSlides, setVisibleSlides] = useState(3);
     const sliderRef = useRef<HTMLDivElement>(null);
@@ -46,9 +44,9 @@ export default function GalleryCarousel({ images }: { images: Image[] }) {
         <section className={styles.carouselSection}>
             <div className="container">
                 <div className={styles.header}>
-                    <div className={styles.badge}>Our Gallery</div>
-                    <h2>Moments of Impact</h2>
-                    <p>A glimpse into our recent activities and community outreach programs.</p>
+                    <div className={styles.badge}>{t('gallery.highlights')}</div>
+                    <h2>{t('gallery.title')}</h2>
+                    <p>{t('gallery.subtitle')}</p>
                 </div>
 
                 <div className={styles.carouselWrapper}>
@@ -71,7 +69,7 @@ export default function GalleryCarousel({ images }: { images: Image[] }) {
                                         <div className={styles.imageWrapper}>
                                             <img src={image.url} alt={image.title || `Gallery Image ${index + 1}`} loading="lazy" />
                                             <div className={styles.overlay}>
-                                                <span className={styles.viewLink}>View in Gallery</span>
+                                                <span className={styles.viewLink}>{t('gallery.viewInGallery')}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -90,7 +88,7 @@ export default function GalleryCarousel({ images }: { images: Image[] }) {
 
                 <div className={styles.footer}>
                     <Link href="/gallery" className="btn btn-primary">
-                        View Full Gallery <FiArrowRight style={{ marginLeft: '8px' }} />
+                        {t('common.viewFullGallery')} <FiArrowRight style={{ marginLeft: '8px' }} />
                     </Link>
                 </div>
             </div>
