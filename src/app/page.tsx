@@ -91,7 +91,11 @@ export default async function Home() {
               <div className={styles.projectInfo}>
                 <span className={styles.tag}>Latest Project</span>
                 <h2>{latestProject.title}</h2>
-                <p>{latestProject.description}</p>
+                <p>
+                  {latestProject.description.length > 250
+                    ? `${latestProject.description.substring(0, 250)}...`
+                    : latestProject.description}
+                </p>
                 <ul className={styles.projectFeatures}>
                   {latestProject.bullet1 && <li>{latestProject.bullet1}</li>}
                   {latestProject.bullet2 && <li>{latestProject.bullet2}</li>}
