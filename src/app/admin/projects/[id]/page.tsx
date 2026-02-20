@@ -45,9 +45,9 @@ export default function EditProject() {
             } else {
                 setMessage({ type: 'error', text: 'Failed to load project details.' });
             }
-        } catch (error) {
+        } catch (error: any) {
             console.error("Fetch error:", error);
-            setMessage({ type: 'error', text: 'An unexpected error occurred.' });
+            setMessage({ type: 'error', text: `Failed to load: ${error.message || 'Unknown error'}` });
         } finally {
             setIsLoading(false);
         }
