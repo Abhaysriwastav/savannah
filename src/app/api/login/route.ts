@@ -44,10 +44,10 @@ export async function POST(request: Request) {
             { expiresIn: '1d' }
         );
 
-        // Set cookie using official next/headers helper
+        // DIAGNOSTIC STEP: Use non-httpOnly cookie to bypass potential environment restrictions
         const cookieStore = await cookies();
-        cookieStore.set('savannah_session', token, {
-            httpOnly: true,
+        cookieStore.set('admin_session', token, {
+            httpOnly: false, // Set to false for diagnostic testing
             secure: true,
             sameSite: 'lax',
             maxAge: 60 * 60 * 24, // 1 day

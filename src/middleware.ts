@@ -3,7 +3,7 @@ import type { NextRequest } from 'next/server';
 
 export function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl;
-    const token = request.cookies.get('savannah_session')?.value;
+    const token = request.cookies.get('admin_session')?.value;
 
     console.log(`Middleware check: ${pathname} - Token: ${token ? 'YES' : 'NO'}`);
 

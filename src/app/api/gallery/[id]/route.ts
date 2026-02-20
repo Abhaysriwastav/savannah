@@ -11,7 +11,7 @@ export async function DELETE(
     try {
         const { id } = await params;
         const cookieStore = await cookies();
-        const token = cookieStore.get('savannah_session');
+        const token = cookieStore.get('admin_session');
 
         if (!token) {
             console.log('API Delete Image: Unauthorized');
