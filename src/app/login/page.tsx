@@ -27,8 +27,8 @@ export default function Login() {
             });
 
             if (res.ok) {
-                router.push('/admin');
-                router.refresh();
+                // Use a full page reload to ensure cookies are properly picked up
+                window.location.href = '/admin';
             } else {
                 const data = await res.json();
                 setError(data.error || 'Invalid credentials');

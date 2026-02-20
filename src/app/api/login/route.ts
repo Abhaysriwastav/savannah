@@ -53,6 +53,8 @@ export async function POST(request: Request) {
             }
         );
 
+        console.log('API Login: Setting savannah_admin_session cookie');
+
         // Try setting it twice or with different settings if needed
         response.cookies.set('savannah_admin_session', token, {
             httpOnly: true,
