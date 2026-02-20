@@ -45,7 +45,11 @@ export default function AdminLayout({
 
                     {/* We will handle logout client-side, but a simple link to a logout API works too.
               For simplicity, let's use a server action or API route for logout. */}
-                    <Link href="/api/logout" className={`${styles.navItem} ${styles.logoutText}`}>
+                    <Link
+                        href="/api/logout"
+                        className={`${styles.navItem} ${styles.logoutText}`}
+                        prefetch={false}
+                    >
                         <FiLogOut className={styles.icon} />
                         <span>Logout</span>
                     </Link>
