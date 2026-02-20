@@ -22,7 +22,7 @@ export async function POST(request: Request) {
         for (const file of files) {
             // Upload to Vercel Blob
             const blob = await put(file.name, file, {
-                access: 'public',
+                access: 'private',
                 addRandomSuffix: true,
             });
 
