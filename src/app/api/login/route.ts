@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
+import { cookies } from 'next/headers';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
@@ -43,21 +44,17 @@ export async function POST(request: Request) {
             { expiresIn: '1d' }
         );
 
-        const response = NextResponse.json(
-            { success: true },
-            { status: 200 }
-        );
-
-        // Set HTTP-only cookie
-        response.cookies.set('admin_token', token, {
+        // Set cookie using next/headers for better compatibility
+        const cookieStore = await cookies();
+        cookieStore.set('admin_token', token, {
             httpOnly: true,
-            secure: true, // Always use secure for Vercel (HTTPS)
+            secure: true,
             sameSite: 'lax',
             maxAge: 60 * 60 * 24, // 1 day
             path: '/',
         });
 
-        return response;
+        return NextResponse.json({ success: true }, { status: 200 });
     } catch (error) {
         console.error('Login error:', error);
         return NextResponse.json(
