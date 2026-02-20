@@ -47,10 +47,11 @@ export default function UploadImageForm() {
                 if (fileInputRef.current) fileInputRef.current.value = '';
                 router.refresh(); // Refresh gallery
             } else {
-                alert('Failed to upload images');
+                const data = await res.json();
+                alert(`Failed to upload images: ${data.details || data.error || 'Unknown error'}`);
             }
-        } catch (err) {
-            alert('Error uploading images');
+        } catch (err: any) {
+            alert(`Error uploading images: ${err.message || 'Unknown error'}`);
         } finally {
             setLoading(false);
         }

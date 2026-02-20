@@ -44,8 +44,11 @@ export async function POST(request: Request) {
         });
 
         return NextResponse.json({ success: true, count: images.length });
-    } catch (error) {
+    } catch (error: any) {
         console.error('Bulk delete error:', error);
-        return NextResponse.json({ error: 'Failed to delete images' }, { status: 500 });
+        return NextResponse.json({
+            error: 'Failed to delete images',
+            details: error.message
+        }, { status: 500 });
     }
 }
