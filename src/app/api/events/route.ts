@@ -26,7 +26,7 @@ export async function POST(request: Request) {
         if (file) {
             // Upload to Vercel Blob
             const blob = await put(file.name, file, {
-                access: 'public',
+                access: 'private',
                 addRandomSuffix: true,
             });
             imageUrl = blob.url;
