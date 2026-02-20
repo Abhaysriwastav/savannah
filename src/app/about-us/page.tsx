@@ -1,7 +1,13 @@
 import styles from "./about.module.css";
 import Image from "next/image";
+import { prisma } from "@/lib/prisma";
 
-export default function AboutUs() {
+export const dynamic = 'force-dynamic';
+
+export default async function AboutUs() {
+    const settings = await prisma.aboutSettings.findFirst();
+    const storyImageUrl = settings?.storyImageUrl;
+
     return (
         <div className={styles.main}>
             {/* Page Header */}
@@ -57,9 +63,18 @@ export default function AboutUs() {
                             </p>
                         </div>
                         <div className={styles.storyImage}>
-                            <div className={styles.imagePlaceholder}>
-                                Community Impact
-                            </div>
+                            {storyImageUrl ? (
+                                <img
+                                    src={storyImageUrl}
+                                    alt="Community Impact"
+                                    className={styles.actualImage}
+                                    style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 'var(--radius-lg)' }}
+                                />
+                            ) : (
+                                <div className={styles.imagePlaceholder}>
+                                    Community Impact
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>

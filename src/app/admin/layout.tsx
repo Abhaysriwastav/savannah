@@ -36,6 +36,11 @@ export default function AdminLayout({
                         <span>Manage Projects</span>
                     </Link>
 
+                    <Link href="/admin/about" className={styles.navItem}>
+                        <FiImage className={styles.icon} />
+                        <span>Manage About Us</span>
+                    </Link>
+
                     <div className={styles.divider}></div>
 
                     <Link href="/" className={styles.navItem}>
