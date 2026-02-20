@@ -1,5 +1,9 @@
 'use client';
 
+import { useState, useEffect, useRef } from 'react';
+import styles from './GalleryCarousel.module.css';
+import { FiChevronLeft, FiChevronRight, FiArrowRight } from 'react-icons/fi';
+import Link from 'next/link';
 import { useLanguage } from '@/context/LanguageContext';
 
 type Image = { id: string; url: string; title: string | null };
