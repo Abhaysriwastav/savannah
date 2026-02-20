@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+export const dynamic = 'force-dynamic';
 import Link from "next/link";
 import { FiPlus, FiTrash2 } from "react-icons/fi";
 import styles from "../admin.module.css";

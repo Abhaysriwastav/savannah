@@ -3,7 +3,7 @@ import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import { FiHeart, FiMessageCircle, FiCreditCard, FiGlobe } from "react-icons/fi";
 
-export const revalidate = 0; // Always serve fresh content for donations count
+export const dynamic = 'force-dynamic';
 
 export default async function Donations() {
     let settings = await prisma.donationSettings.findFirst();

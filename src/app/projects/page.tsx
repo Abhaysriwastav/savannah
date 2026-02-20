@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+export const dynamic = 'force-dynamic';
 import Link from 'next/link';
 import styles from './projects.module.css';
 import { FiTarget, FiArrowRight } from 'react-icons/fi';

@@ -6,7 +6,7 @@ import { prisma } from "@/lib/prisma";
 import GalleryCarousel from "@/components/GalleryCarousel";
 import HeroSlider from "@/components/HeroSlider";
 
-export const revalidate = 60; // Revalidate home page every minute
+export const dynamic = 'force-dynamic';
 
 export default async function Home() {
   const events = await prisma.event.findMany({

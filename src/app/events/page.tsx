@@ -1,5 +1,6 @@
 import styles from "./events.module.css";
 import { prisma } from "@/lib/prisma";
+export const dynamic = 'force-dynamic';
 import Image from "next/image";
 import Link from "next/link";
 import { FiCalendar, FiMapPin } from "react-icons/fi";
