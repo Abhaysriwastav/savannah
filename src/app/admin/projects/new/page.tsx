@@ -52,7 +52,8 @@ export default function NewProject() {
                     const data = await uploadRes.json();
                     finalImageUrl = Array.isArray(data) ? data[0].url : data.url;
                 } else {
-                    throw new Error("Failed to upload image.");
+                    const errorData = await uploadRes.json();
+                    throw new Error(errorData.details || errorData.error || "Failed to upload image.");
                 }
             }
 
