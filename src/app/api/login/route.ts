@@ -46,11 +46,22 @@ export async function POST(request: Request) {
 
         // Set cookie manually on response for maximum compatibility
         const response = NextResponse.json({ success: true }, { status: 200 });
+
+        // Try setting it twice or with different settings if needed
         response.cookies.set('savannah_admin_session', token, {
             httpOnly: true,
             secure: true,
             sameSite: 'lax',
             maxAge: 60 * 60 * 24, // 1 day
+            path: '/',
+        });
+
+        // Also set a non-httpOnly flag for debugging (visible in document.cookie)
+        response.cookies.set('savannah_debug_flag', 'exists', {
+            httpOnly: false,
+            secure: true,
+            sameSite: 'lax',
+            maxAge: 60 * 60 * 24,
             path: '/',
         });
 
