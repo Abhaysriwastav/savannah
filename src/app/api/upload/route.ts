@@ -12,6 +12,9 @@ export async function POST(request: Request) {
         // Handle both singular and plural versions of the Vercel Blob token
         const blobToken = process.env.BLOB_READ_WRITE_TOKEN || process.env.BLOBS_READ_WRITE_TOKEN;
 
+        const { searchParams } = new URL(request.url);
+        const isGallery = searchParams.get('type') === 'gallery';
+
         const formData = await request.formData();
         const files = formData.getAll('images') as File[];
         const title = formData.get('title') as string | null;
@@ -30,13 +33,17 @@ export async function POST(request: Request) {
                 addRandomSuffix: true,
             });
 
-            const image = await prisma.galleryImage.create({
-                data: {
-                    url: blob.url,
-                    title: title || null,
-                },
-            });
-            uploadedImages.push(image);
+            if (isGallery) {
+                const image = await prisma.galleryImage.create({
+                    data: {
+                        url: blob.url,
+                        title: title || null,
+                    },
+                });
+                uploadedImages.push(image);
+            } else {
+                uploadedImages.push({ url: blob.url });
+            }
         }
 
         return NextResponse.json(uploadedImages, { status: 201 });

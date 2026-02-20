@@ -36,7 +36,7 @@ export default function UploadImageForm() {
         }
 
         try {
-            const res = await fetch('/api/upload', {
+            const res = await fetch('/api/upload?type=gallery', {
                 method: 'POST',
                 body: formData,
             });
