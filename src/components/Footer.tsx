@@ -59,6 +59,7 @@ export default function Footer() {
 
                 <div className={styles.bottomBar}>
                     <p>&copy; {new Date().getFullYear()} Savannah United Berlin e.V. All rights reserved.</p>
+                    <Link href="/login" className={styles.adminLink}>Admin Login</Link>
                 </div>
             </div>
         </footer>

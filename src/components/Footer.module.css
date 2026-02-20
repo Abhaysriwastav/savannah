@@ -92,7 +92,29 @@
 .bottomBar {
     padding: var(--spacing-md) 0;
     border-top: 1px solid var(--border);
-    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
     color: var(--text-secondary);
     font-size: 0.875rem;
+}
+
+.adminLink {
+    color: var(--text-secondary);
+    text-decoration: none;
+    opacity: 0.6;
+    transition: opacity var(--transition-fast), color var(--transition-fast);
+}
+
+.adminLink:hover {
+    opacity: 1;
+    color: var(--primary);
+}
+
+@media (max-width: 640px) {
+    .bottomBar {
+        flex-direction: column;
+    }
 }
