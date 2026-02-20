@@ -48,8 +48,8 @@ export default function Footer() {
                             </li>
                             <li>
                                 <strong>Email:</strong> <br />
-                                <a href="mailto:info@savannahunited-berlin-ev.com">
-                                    info@savannahunited-berlin-ev.com
+                                <a href="mailto:info@savannahunited.com">
+                                    info@savannahunited.com
                                 </a>
                             </li>
                         </ul>
