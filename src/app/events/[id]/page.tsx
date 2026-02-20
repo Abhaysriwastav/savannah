@@ -5,7 +5,7 @@ import Link from "next/link";
 import { FiCalendar, FiMapPin, FiArrowLeft } from "react-icons/fi";
 import styles from "./eventDetail.module.css";
 
-export const revalidate = 60; // Revalidate every minute
+export const dynamic = 'force-dynamic';
 
 export default async function EventDetail({ params }: { params: Promise<{ id: string }> }) {
     const resolvedParams = await params;
