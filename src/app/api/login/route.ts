@@ -44,10 +44,10 @@ export async function POST(request: Request) {
             { expiresIn: '1d' }
         );
 
-        // DIAGNOSTIC STEP: Use non-httpOnly cookie to bypass potential environment restrictions
+        // Re-enable httpOnly now that prefetching and domain issues are resolved
         const cookieStore = await cookies();
         cookieStore.set('admin_session', token, {
-            httpOnly: false, // Set to false for diagnostic testing
+            httpOnly: true,
             secure: true,
             sameSite: 'lax',
             maxAge: 60 * 60 * 24, // 1 day

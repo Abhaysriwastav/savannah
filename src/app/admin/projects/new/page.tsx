@@ -67,10 +67,10 @@ export default function NewProject() {
                 router.refresh();
             } else {
                 const data = await res.json();
-                setMessage({ type: 'error', text: data.error || 'Failed to create project.' });
+                setMessage({ type: 'error', text: data.details || data.error || 'Failed to create project.' });
             }
-        } catch (error) {
-            setMessage({ type: 'error', text: 'An unexpected error occurred.' });
+        } catch (error: any) {
+            setMessage({ type: 'error', text: `An error occurred: ${error.message || 'Unknown error'}` });
         } finally {
             setIsSaving(false);
         }
