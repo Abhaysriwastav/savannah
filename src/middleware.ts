@@ -3,21 +3,18 @@ import type { NextRequest } from 'next/server';
 
 export function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl;
+    const token = request.cookies.get('admin_token')?.value;
 
-    // Protect /admin routes (excluding login if it was under admin, but it's /login)
+    // Protect /admin routes
     if (pathname.startsWith('/admin')) {
-        const token = request.cookies.get('admin_token')?.value;
-
-        // Simplistic check: If no token exists, redirect to login
         if (!token) {
-            const loginUrl = new URL('/login', request.url);
-            return NextResponse.redirect(loginUrl);
+            return NextResponse.redirect(new URL('/login', request.url));
         }
-    }
 
-    // Redirect /admin access directly to /admin/events as default dashboard
-    if (pathname === '/admin') {
-        return NextResponse.redirect(new URL('/admin/events', request.url));
+        // Redirect /admin to /admin/events
+        if (pathname === '/admin') {
+            return NextResponse.redirect(new URL('/admin/events', request.url));
+        }
     }
 
     return NextResponse.next();
