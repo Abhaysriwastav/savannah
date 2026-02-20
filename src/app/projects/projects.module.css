@@ -182,3 +182,117 @@
 .projectCard:hover .readMore {
     gap: 12px;
 }
+
+.projectLink {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+/* Detail View Styles */
+.detailMain {
+    width: 100%;
+}
+
+.detailHero {
+    background-color: var(--primary);
+    padding: 160px 0 100px 0;
+    text-align: center;
+    color: white;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.detailHero h1 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    margin-bottom: var(--spacing-md);
+    color: white;
+}
+
+.detailContent {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.detailGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-xxl);
+}
+
+@media (min-width: 992px) {
+    .detailGrid {
+        grid-template-columns: 3fr 2fr;
+    }
+}
+
+.detailImage {
+    width: 100%;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-xl);
+    margin-bottom: var(--spacing-xl);
+}
+
+.detailImage img {
+    width: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+.detailBody h2 {
+    font-size: 2rem;
+    margin-bottom: var(--spacing-lg);
+    color: var(--text-primary);
+}
+
+.detailBody p {
+    color: var(--text-secondary);
+    line-height: 1.8;
+    font-size: 1.1rem;
+    margin-bottom: var(--spacing-xl);
+    white-space: pre-wrap;
+}
+
+.detailSidebar {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+}
+
+.sidebarCard {
+    padding: var(--spacing-xl);
+    border-radius: var(--radius-lg);
+}
+
+.sidebarCard h3 {
+    font-size: 1.25rem;
+    margin-bottom: var(--spacing-md);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--primary);
+}
+
+.sidebarList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.sidebarList li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    color: var(--text-secondary);
+}
+
+.sidebarList li::before {
+    content: '→';
+    color: var(--primary);
+    font-weight: bold;
+}
