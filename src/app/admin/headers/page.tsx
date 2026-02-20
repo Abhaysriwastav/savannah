@@ -12,6 +12,8 @@ interface PageHeader {
 }
 
 const PAGES = [
+    { id: 'about', label: 'About Us Page' },
+    { id: 'donations', label: 'Donation Page' },
     { id: 'events', label: 'Events Page' },
     { id: 'projects', label: 'Projects Page' },
     { id: 'gallery', label: 'Gallery Page' },
