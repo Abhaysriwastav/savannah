@@ -72,6 +72,12 @@
     cursor: pointer;
 }
 
+@media (min-width: 768px) {
+    .mobileLangToggle {
+        display: none;
+    }
+}
+
 .primaryText {
     color: var(--primary);
 }
