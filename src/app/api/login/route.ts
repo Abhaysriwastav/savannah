@@ -45,7 +45,13 @@ export async function POST(request: Request) {
         );
 
         // Set cookie manually on response for maximum compatibility
-        const response = NextResponse.json({ success: true }, { status: 200 });
+        const response = NextResponse.json(
+            { success: true },
+            {
+                status: 200,
+                headers: { 'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate' }
+            }
+        );
 
         // Try setting it twice or with different settings if needed
         response.cookies.set('savannah_admin_session', token, {
