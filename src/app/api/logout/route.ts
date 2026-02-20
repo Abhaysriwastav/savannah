@@ -1,11 +1,12 @@
 import { NextResponse } from 'next/server';
 
-export async function GET(request: Request) {
-    const response = NextResponse.redirect(new URL('/login', request.url));
+export async function GET() {
+    const response = NextResponse.redirect(new URL('/login', process.env.NEXT_PUBLIC_APP_URL || 'https://savannahunited-berlin-ev.com'));
 
-    // Clear the cookie by setting it with Max-Age=0
     response.cookies.set('admin_token', '', {
         httpOnly: true,
+        secure: true,
+        sameSite: 'lax',
         expires: new Date(0),
         path: '/',
     });
