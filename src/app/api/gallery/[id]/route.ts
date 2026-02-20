@@ -11,12 +11,13 @@ export async function DELETE(
     try {
         const { id } = await params;
         const cookieStore = await cookies();
+        const token = cookieStore.get('savannah_session');
+
         if (!token) {
             console.log('API Delete Image: Unauthorized');
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
         }
 
-        const { id } = await params;
         console.log(`API: Attempting to delete image with ID: ${id}`);
 
         // Get the image first to find its URL
