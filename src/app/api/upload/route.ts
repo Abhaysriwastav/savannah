@@ -7,7 +7,6 @@ export async function POST(request: Request) {
     try {
         const cookieStore = await cookies();
         const token = cookieStore.get('admin_session');
-        const token = cookieStore.get('admin_session');
         if (!token) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
         // Handle both singular and plural versions of the Vercel Blob token

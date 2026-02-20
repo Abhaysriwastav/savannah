@@ -7,7 +7,6 @@ import { put } from '@vercel/blob';
 async function checkAuth() {
     const cookieStore = await cookies();
     const token = cookieStore.get('admin_session');
-    const token = cookieStore.get('admin_session');
     if (!token) throw new Error('Unauthorized');
 }
 
