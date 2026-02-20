@@ -74,11 +74,6 @@ export default function GalleryCarousel({ images }: { images: Image[] }) {
                                                 <span className={styles.viewLink}>View in Gallery</span>
                                             </div>
                                         </div>
-                                        {image.title && (
-                                            <div className={styles.caption}>
-                                                <p>{image.title}</p>
-                                            </div>
-                                        )}
                                     </div>
                                 </Link>
                             ))}
