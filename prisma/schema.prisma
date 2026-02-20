@@ -1,0 +1,57 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Event {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String
+  date        DateTime
+  location    String
+  imageUrl    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model GalleryImage {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  url       String
+  title     String?
+  createdAt DateTime @default(now())
+}
+
+model AdminUser {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  username     String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+}
+
+model DonationSettings {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  bankName      String   @default("Bank Name")
+  accountName   String   @default("Savannah United Berlin e.V.")
+  iban          String   @default("DE00 0000 0000 0000 0000 00")
+  bic           String   @default("XXXXX")
+  whatsappPhone String   @default("+49000000000") // Format with country code for wa.me
+  imageUrl      String?  
+  totalCount    Int      @default(0)
+  updatedAt     DateTime @updatedAt
+}
+
+model Project {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String
+  bullet1     String?
+  bullet2     String?
+  bullet3     String?
+  imageUrl    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

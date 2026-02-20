@@ -1,0 +1,134 @@
+.main {
+    width: 100%;
+}
+
+.pageHeader {
+    background: var(--primary);
+    color: white;
+    padding: 120px 0 60px 0;
+    text-align: center;
+}
+
+.pageHeader h1 {
+    color: white;
+    margin-bottom: var(--spacing-sm);
+    font-size: clamp(2rem, 4vw, 3rem);
+}
+
+.subtitle {
+    font-size: 1.25rem;
+    opacity: 0.9;
+}
+
+.eventsGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-xl);
+}
+
+@media (min-width: 768px) {
+    .eventsGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .eventsGrid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.eventCard {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.eventCard:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-xl);
+}
+
+.eventImage {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background-color: var(--border);
+    position: relative;
+    overflow: hidden;
+}
+
+.eventImage img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-slow);
+}
+
+.eventCard:hover .eventImage img {
+    transform: scale(1.05);
+}
+
+.imagePlaceholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    font-weight: 500;
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.eventContent {
+    padding: var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.eventContent h3 {
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.25rem;
+    line-height: 1.4;
+}
+
+.eventMeta {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px solid var(--border);
+}
+
+.metaItem {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+}
+
+.icon {
+    color: var(--primary);
+}
+
+.eventDescription {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.emptyState {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 40vh;
+}

@@ -1,0 +1,240 @@
+.adminContainer {
+    display: flex;
+    min-height: 100vh;
+    background-color: var(--background);
+}
+
+.sidebar {
+    width: 280px;
+    background-color: var(--surface);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    z-index: 100;
+}
+
+.sidebarHeader {
+    padding: var(--spacing-lg);
+    border-bottom: 1px solid var(--border);
+}
+
+.sidebarHeader h2 {
+    font-size: 1.25rem;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.sidebarNav {
+    padding: var(--spacing-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    flex-grow: 1;
+}
+
+.navItem {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-md);
+    color: var(--text-secondary);
+    font-weight: 500;
+    transition: all var(--transition-fast);
+}
+
+.navItem:hover {
+    background-color: rgba(224, 122, 95, 0.1);
+    color: var(--primary);
+}
+
+.icon {
+    font-size: 1.25rem;
+}
+
+.divider {
+    height: 1px;
+    background-color: var(--border);
+    margin: var(--spacing-sm) 0;
+}
+
+.logoutText {
+    color: var(--error);
+    margin-top: auto;
+}
+
+.logoutText:hover {
+    background-color: rgba(230, 57, 70, 0.1);
+    color: var(--error);
+}
+
+.mainContent {
+    flex-grow: 1;
+    margin-left: 280px;
+    /* match sidebar width */
+    min-height: 100vh;
+}
+
+.contentWrapper {
+    padding: var(--spacing-xl);
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Page headers inside admin */
+.pageHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-xl);
+    padding-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--border);
+}
+
+.pageHeader h1 {
+    font-size: 2rem;
+    margin: 0;
+}
+
+/* Common form styles for admin */
+.adminCard {
+    background-color: var(--surface);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border);
+}
+
+.formGrid {
+    display: grid;
+    gap: var(--spacing-lg);
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th,
+.table td {
+    padding: var(--spacing-md);
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+}
+
+.table th {
+    font-weight: 600;
+    color: var(--text-secondary);
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+.actionCell {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+/* Gallery Manager Specific Styles */
+.galleryCard {
+    position: relative;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 3px solid var(--border);
+    transition: all var(--transition-fast);
+    cursor: pointer;
+    background-color: var(--surface);
+}
+
+.galleryCard:hover {
+    border-color: rgba(0, 0, 0, 0.2);
+}
+
+.selectedCard {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px var(--primary);
+}
+
+.checkboxOverlay {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 4px;
+    padding: 4px;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.imageCheckbox {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: var(--primary);
+}
+
+.galleryImage {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    display: block;
+    transition: opacity var(--transition-fast);
+}
+
+.selectedCard .galleryImage {
+    opacity: 0.8;
+}
+
+.galleryCardFooter {
+    padding: var(--spacing-sm);
+    background-color: var(--surface);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--border);
+}
+
+.galleryTitle {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+/* Floating Bulk Action Bar */
+.bulkActionBarWrapper {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bulkActionBar {
+    background-color: var(--surface);
+    color: var(--text-primary);
+    padding: 1rem 1.5rem;
+    border-radius: 50px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    border: 1px solid var(--border);
+}
+
+@keyframes slideUp {
+    0% {
+        transform: translate(-50%, 20px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translate(-50%, 0);
+        opacity: 1;
+    }
+}

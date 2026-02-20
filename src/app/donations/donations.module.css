@@ -1,0 +1,346 @@
+.main {
+    width: 100%;
+}
+
+/* Hero Image Header Section */
+.heroSection {
+    position: relative;
+    padding: 180px 0 120px 0;
+    text-align: center;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.heroOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.8) 100%);
+    z-index: 1;
+}
+
+.heroContent {
+    position: relative;
+    z-index: 2;
+    color: white;
+}
+
+.heroContent h1 {
+    color: white;
+    margin-bottom: var(--spacing-md);
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    text-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.heroSubtitle {
+    font-size: 1.25rem;
+    opacity: 0.9;
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.6;
+    text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Counter Section */
+.counterSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: var(--spacing-xxl);
+    margin-top: -80px;
+    /* Overlap header securely */
+    background: white;
+    padding: var(--spacing-xxl) var(--spacing-xl);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-xl);
+    position: relative;
+    z-index: 10;
+}
+
+.heartIconWrapper {
+    width: 80px;
+    height: 80px;
+    background: rgba(224, 122, 95, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--spacing-md);
+    animation: pulseHeart 2s infinite;
+}
+
+.heartIcon {
+    color: var(--primary);
+    fill: var(--primary);
+}
+
+@keyframes pulseHeart {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.counterSection h2 {
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-lg);
+}
+
+.counterBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.counterNumber {
+    font-size: clamp(4rem, 8vw, 6rem);
+    font-weight: 800;
+    line-height: 1;
+    color: var(--primary);
+    font-family: var(--font-heading);
+    text-shadow: 2px 2px 0px rgba(224, 122, 95, 0.2);
+}
+
+.counterLabel {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* Grid Layout */
+.grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-xl);
+}
+
+@media (min-width: 992px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+        align-items: stretch;
+    }
+}
+
+/* Card Styling */
+.card {
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing-xl);
+    border-radius: var(--radius-lg);
+    background-color: var(--surface);
+}
+
+.cardHeader {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-lg);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 2px solid var(--border);
+}
+
+.icon {
+    color: var(--primary);
+}
+
+.cardHeader h3 {
+    margin: 0;
+    color: var(--text-primary);
+    font-size: 1.5rem;
+}
+
+.cardBody {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.cardText {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: var(--spacing-lg);
+}
+
+/* Bank Details Styling */
+.bankDetails {
+    background: rgba(0, 0, 0, 0.02);
+    border: 1px dashed var(--border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    margin-top: auto;
+}
+
+.detailRow {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+@media (min-width: 640px) {
+    .detailRow {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        padding-bottom: 8px;
+    }
+
+    .detailRow:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+}
+
+.detailLabel {
+    color: var(--text-secondary);
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.detailValue {
+    color: var(--text-primary);
+    font-weight: 600;
+    font-family: var(--font-mono, monospace);
+    word-break: break-all;
+}
+
+/* WhatsApp Styling */
+.whatsappAction {
+    margin-top: auto;
+    margin-bottom: var(--spacing-xl);
+}
+
+.whatsappBtn {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing-sm);
+    background-color: #25D366;
+    /* Official WhatsApp Green */
+    border-color: #25D366;
+    font-size: 1.1rem;
+    padding: 1rem;
+}
+
+.whatsappBtn:hover {
+    background-color: #128C7E;
+    border-color: #128C7E;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+}
+
+.securityNote {
+    display: flex;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+/* Impact Tiers Styling */
+.tierGrid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-sm);
+}
+
+.tierItem {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    background: rgba(224, 122, 95, 0.05);
+    border: 1px solid rgba(224, 122, 95, 0.1);
+    transition: transform var(--transition-fast), background var(--transition-fast);
+}
+
+.tierItem:hover {
+    transform: translateX(5px);
+    background: rgba(224, 122, 95, 0.1);
+}
+
+@media (min-width: 640px) {
+    .tierItem {
+        flex-direction: row;
+        align-items: center;
+    }
+}
+
+.tierAmount {
+    font-weight: 800;
+    font-size: 1.5rem;
+    color: var(--primary);
+    min-width: 100px;
+}
+
+.tierDesc {
+    color: var(--text-secondary);
+    line-height: 1.5;
+    font-size: 1rem;
+}
+
+.impactList {
+    padding-left: 20px;
+    margin-top: var(--spacing-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.impactList li strong {
+    color: var(--text-primary);
+}
+
+/* Trust & Transparency Footer */
+.trustSection {
+    text-align: center;
+    max-width: 800px;
+    margin: var(--spacing-xxl) auto 0;
+    padding: var(--spacing-xl);
+    background: white;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    position: relative;
+}
+
+.trustSection::before {
+    content: '"';
+    font-family: var(--font-heading);
+    font-size: 6rem;
+    color: rgba(224, 122, 95, 0.1);
+    position: absolute;
+    top: -20px;
+    left: 20px;
+    line-height: 1;
+}
+
+.trustSection p {
+    font-size: 1.15rem;
+    color: var(--text-primary);
+    font-style: italic;
+    line-height: 1.8;
+}

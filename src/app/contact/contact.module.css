@@ -1,0 +1,125 @@
+.main {
+    width: 100%;
+}
+
+.pageHeader {
+    background: var(--primary);
+    color: white;
+    padding: 120px 0 60px 0;
+    text-align: center;
+}
+
+.pageHeader h1 {
+    color: white;
+    margin-bottom: var(--spacing-sm);
+    font-size: clamp(2rem, 4vw, 3rem);
+}
+
+.subtitle {
+    font-size: 1.25rem;
+    opacity: 0.9;
+}
+
+.contactGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-xxl);
+}
+
+@media (min-width: 992px) {
+    .contactGrid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.contactInfo h2 {
+    margin-bottom: var(--spacing-md);
+}
+
+.contactInfo>p {
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: var(--spacing-xl);
+}
+
+.infoCards {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.infoCard {
+    padding: var(--spacing-xl);
+    border-radius: var(--radius-lg);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-xs);
+}
+
+.icon {
+    font-size: 2rem;
+    color: var(--primary);
+    margin-bottom: var(--spacing-xs);
+}
+
+.infoCard h3 {
+    margin: 0;
+    font-size: 1.25rem;
+}
+
+.infoCard p,
+.infoCard a {
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.infoCard a:hover {
+    color: var(--primary);
+}
+
+.formContainer {
+    padding: var(--spacing-xl);
+    border-radius: var(--radius-xl);
+}
+
+.formContainer h2 {
+    margin-bottom: var(--spacing-lg);
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+.formGroup label {
+    font-weight: 500;
+    font-size: 0.875rem;
+    color: var(--text-primary);
+}
+
+.formGroup input,
+.formGroup textarea {
+    padding: 0.875rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    font-family: inherit;
+    font-size: 1rem;
+    background-color: var(--background);
+    color: var(--text-primary);
+    transition: border-color var(--transition-fast);
+}
+
+.formGroup input:focus,
+.formGroup textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(224, 122, 95, 0.1);
+}
