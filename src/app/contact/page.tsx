@@ -29,7 +29,7 @@ export default function ContactUs() {
                             <div className={`${styles.infoCard} glass-panel`}>
                                 <FiMail className={styles.icon} />
                                 <h3>Email</h3>
-                                <a href="mailto:info@savannahunited-berlin-ev.com">info@savannahunited-berlin-ev.com</a>
+                                <a href="mailto:info@savannahunited.com">info@savannahunited.com</a>
                             </div>
 
                             <div className={`${styles.infoCard} glass-panel`}>
