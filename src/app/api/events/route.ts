@@ -1,8 +1,7 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { cookies } from 'next/headers';
-import { writeFile } from 'fs/promises';
-import path from 'path';
+import { put } from '@vercel/blob';
 
 // Optional: Security check utility
 async function checkAuth() {
@@ -25,15 +24,12 @@ export async function POST(request: Request) {
         let imageUrl = null;
 
         if (file) {
-            const bytes = await file.arrayBuffer();
-            const buffer = Buffer.from(bytes);
-            const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
-            const filename = `event-${uniqueSuffix}-${file.name.replace(/[^a-zA-Z0-9.]/g, '')}`;
-            const uploadDir = path.join(process.cwd(), 'public', 'uploads');
-            const filePath = path.join(uploadDir, filename);
-
-            await writeFile(filePath, buffer);
-            imageUrl = `/uploads/${filename}`;
+            // Upload to Vercel Blob
+            const blob = await put(file.name, file, {
+                access: 'public',
+                addRandomSuffix: true,
+            });
+            imageUrl = blob.url;
         }
 
         const event = await prisma.event.create({
