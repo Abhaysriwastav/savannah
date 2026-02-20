@@ -49,13 +49,11 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         return result;
     };
 
-    if (!isLoaded) {
-        return <div style={{ opacity: 0 }}>{children}</div>; // Avoid flicker
-    }
-
     return (
         <LanguageContext.Provider value={{ language, setLanguage: handleSetLanguage, t }}>
-            {children}
+            <div style={{ opacity: isLoaded ? 1 : 0 }}>
+                {children}
+            </div>
         </LanguageContext.Provider>
     );
 };
