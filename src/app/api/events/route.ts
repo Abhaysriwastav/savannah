@@ -7,8 +7,12 @@ import { put } from '@vercel/blob';
 async function checkAuth() {
     const cookieStore = await cookies();
     const token = cookieStore.get('admin_session');
+    const token = cookieStore.get('admin_session');
     if (!token) throw new Error('Unauthorized');
 }
+
+// Handle both singular and plural versions of the Vercel Blob token
+const getBlobToken = () => process.env.BLOB_READ_WRITE_TOKEN || process.env.BLOBS_READ_WRITE_TOKEN;
 
 export async function POST(request: Request) {
     try {
@@ -24,9 +28,10 @@ export async function POST(request: Request) {
         let imageUrl = null;
 
         if (file) {
-            // Upload to Vercel Blob
+            // Upload to Vercel Blob - use 'public' as store is now public
             const blob = await put(file.name, file, {
-                access: 'private',
+                access: 'public',
+                token: getBlobToken(),
                 addRandomSuffix: true,
             });
             imageUrl = blob.url;

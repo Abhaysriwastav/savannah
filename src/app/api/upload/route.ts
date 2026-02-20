@@ -7,7 +7,11 @@ export async function POST(request: Request) {
     try {
         const cookieStore = await cookies();
         const token = cookieStore.get('admin_session');
+        const token = cookieStore.get('admin_session');
         if (!token) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
+        // Handle both singular and plural versions of the Vercel Blob token
+        const blobToken = process.env.BLOB_READ_WRITE_TOKEN || process.env.BLOBS_READ_WRITE_TOKEN;
 
         const formData = await request.formData();
         const files = formData.getAll('images') as File[];
@@ -20,9 +24,10 @@ export async function POST(request: Request) {
         const uploadedImages = [];
 
         for (const file of files) {
-            // Upload to Vercel Blob
+            // Upload to Vercel Blob - restore 'public' as store is now public
             const blob = await put(file.name, file, {
-                access: 'private',
+                access: 'public',
+                token: blobToken,
                 addRandomSuffix: true,
             });
 

@@ -12,12 +12,9 @@ export default async function Gallery() {
 
     type GalleryImageItem = typeof images[0];
 
-    // Group images by title, but only include those that HAVE a title
-    // to satisfy the "remove other highlights" requirement.
+    // Group images by title, assigning those without a title to "Other Highlights".
     const groupedImages = images.reduce((acc: Record<string, GalleryImageItem[]>, image: GalleryImageItem) => {
-        if (!image.title) return acc; // Skip images without titles (Other Highlights)
-
-        const key = image.title;
+        const key = image.title || "Other Highlights";
         if (!acc[key]) {
             acc[key] = [];
         }
