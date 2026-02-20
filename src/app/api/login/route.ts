@@ -44,9 +44,9 @@ export async function POST(request: Request) {
             { expiresIn: '1d' }
         );
 
-        // Set cookie using next/headers for better compatibility
-        const cookieStore = await cookies();
-        cookieStore.set('admin_token', token, {
+        // Set cookie manually on response for maximum compatibility
+        const response = NextResponse.json({ success: true }, { status: 200 });
+        response.cookies.set('savannah_admin_session', token, {
             httpOnly: true,
             secure: true,
             sameSite: 'lax',
@@ -54,7 +54,7 @@ export async function POST(request: Request) {
             path: '/',
         });
 
-        return NextResponse.json({ success: true }, { status: 200 });
+        return response;
     } catch (error) {
         console.error('Login error:', error);
         return NextResponse.json(

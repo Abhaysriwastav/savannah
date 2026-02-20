@@ -11,7 +11,7 @@ export async function DELETE(
     try {
         const { id } = await params;
         const cookieStore = await cookies();
-        const token = cookieStore.get('admin_token');
+        const token = cookieStore.get('savannah_admin_session');
         if (!token) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
         // Get the image first to find its URL
