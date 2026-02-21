@@ -6,10 +6,15 @@ import { useLanguage } from "@/context/LanguageContext";
 interface AboutContentProps {
     storyImageUrl?: string | null;
     headerImageUrl?: string | null;
+    settings?: any;
 }
 
-export default function AboutContent({ storyImageUrl, headerImageUrl }: AboutContentProps) {
-    const { t } = useLanguage();
+export default function AboutContent({ storyImageUrl, headerImageUrl, settings }: AboutContentProps) {
+    const { t, language } = useLanguage();
+
+    const mission = language === 'en' ? settings?.missionEn : settings?.missionDe;
+    const vision = language === 'en' ? settings?.visionEn : settings?.visionDe;
+    const story = language === 'en' ? settings?.storyEn : settings?.storyDe;
 
     return (
         <div className={styles.main}>
@@ -29,22 +34,32 @@ export default function AboutContent({ storyImageUrl, headerImageUrl }: AboutCon
                 <div className={`container ${styles.grid}`}>
                     <div className={`${styles.card} glass-panel`}>
                         <h2>{t('about.mission')}</h2>
-                        <p>
-                            To engage in humanitarian aid in Germany (focal point Berlin-Brandenburg)
-                            where our members live, and improve the lives of the needy and displaced
-                            persons in Nigeria as a result of natural disasters, human negligence,
-                            war, and/or terrorism.
-                        </p>
-                        <p>We try our very best to support HUMANITY in any way possible.</p>
+                        {mission ? (
+                            <p style={{ whiteSpace: 'pre-line' }}>{mission}</p>
+                        ) : (
+                            <>
+                                <p>
+                                    To engage in humanitarian aid in Germany (focal point Berlin-Brandenburg)
+                                    where our members live, and improve the lives of the needy and displaced
+                                    persons in Nigeria as a result of natural disasters, human negligence,
+                                    war, and/or terrorism.
+                                </p>
+                                <p>We try our very best to support HUMANITY in any way possible.</p>
+                            </>
+                        )}
                     </div>
                     <div className={`${styles.card} glass-panel`}>
                         <h2>{t('about.vision')}</h2>
-                        <p>
-                            A world where socio-economic integration is seamless, and communities
-                            are empowered with the resources they need to thrive regardless of their
-                            circumstances. We envision a society defined by unity, education, and
-                            sustainable development.
-                        </p>
+                        {vision ? (
+                            <p style={{ whiteSpace: 'pre-line' }}>{vision}</p>
+                        ) : (
+                            <p>
+                                A world where socio-economic integration is seamless, and communities
+                                are empowered with the resources they need to thrive regardless of their
+                                circumstances. We envision a society defined by unity, education, and
+                                sustainable development.
+                            </p>
+                        )}
                     </div>
                 </div>
             </section>
@@ -55,18 +70,24 @@ export default function AboutContent({ storyImageUrl, headerImageUrl }: AboutCon
                     <div className={styles.storyContent}>
                         <div className={styles.storyText}>
                             <h2>{t('about.story')}</h2>
-                            <p>
-                                Savannah United Berlin e.V is a nonprofit organization driven by the passion
-                                for Socio-economic integration and Humanitarian aids to the needy. Founded
-                                by a group of dedicated individuals, our organization has grown to support
-                                thousands of individuals across continents.
-                            </p>
-                            <br />
-                            <p>
-                                Whether it's donating educational materials to schools in Nigeria or fostering
-                                integration programs in Berlin, we believe that collective action can yield
-                                extraordinary results.
-                            </p>
+                            {story ? (
+                                <p style={{ whiteSpace: 'pre-line' }}>{story}</p>
+                            ) : (
+                                <>
+                                    <p>
+                                        Savannah United Berlin e.V is a nonprofit organization driven by the passion
+                                        for Socio-economic integration and Humanitarian aids to the needy. Founded
+                                        by a group of dedicated individuals, our organization has grown to support
+                                        thousands of individuals across continents.
+                                    </p>
+                                    <br />
+                                    <p>
+                                        Whether it&apos;s donating educational materials to schools in Nigeria or fostering
+                                        integration programs in Berlin, we believe that collective action can yield
+                                        extraordinary results.
+                                    </p>
+                                </>
+                            )}
                         </div>
                         <div className={styles.storyImage}>
                             {storyImageUrl ? (

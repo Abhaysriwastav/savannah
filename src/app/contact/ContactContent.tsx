@@ -7,9 +7,10 @@ import { useLanguage } from "@/context/LanguageContext";
 
 interface ContactContentProps {
     headerImageUrl?: string | null;
+    contactSettings?: any;
 }
 
-export default function ContactContent({ headerImageUrl }: ContactContentProps) {
+export default function ContactContent({ headerImageUrl, contactSettings }: ContactContentProps) {
     const { t } = useLanguage();
     const [formData, setFormData] = useState({
         name: '',
@@ -71,21 +72,36 @@ export default function ContactContent({ headerImageUrl }: ContactContentProps) 
                             <div className={`${styles.infoCard} glass-panel`}>
                                 <FiPhone className={styles.icon} />
                                 <h3>{t('contact.phone')}</h3>
-                                <p>(+49)15-2102-85342</p>
+                                <p>{contactSettings?.phone || '(+49)15-2102-85342'}</p>
                             </div>
 
                             <div className={`${styles.infoCard} glass-panel`}>
                                 <FiMail className={styles.icon} />
                                 <h3>{t('contact.email')}</h3>
-                                <a href="mailto:info@savannahunited.com">info@savannahunited.com</a>
+                                <a href={`mailto:${contactSettings?.email || 'info@savannahunited.com'}`}>
+                                    {contactSettings?.email || 'info@savannahunited.com'}
+                                </a>
                             </div>
 
                             <div className={`${styles.infoCard} glass-panel`}>
                                 <FiMapPin className={styles.icon} />
                                 <h3>{t('contact.location')}</h3>
-                                <p>{t('contact.berlin')}</p>
+                                <p>{contactSettings?.address || t('contact.berlin')}</p>
                             </div>
                         </div>
+
+                        {contactSettings?.locationUrl && (
+                            <div className={styles.mapContainer} style={{ marginTop: '2rem', borderRadius: '12px', overflow: 'hidden', height: '300px' }}>
+                                <iframe
+                                    src={contactSettings.locationUrl}
+                                    width="100%"
+                                    height="100%"
+                                    style={{ border: 0 }}
+                                    allowFullScreen
+                                    loading="lazy"
+                                ></iframe>
+                            </div>
+                        )}
                     </div>
 
                     {/* Contact Form */}

@@ -29,7 +29,8 @@ export default function AdminDonations() {
         bic: '',
         whatsappPhone: '',
         imageUrl: '',
-        headerImageUrl: ''
+        headerImageUrl: '',
+        totalCount: 0
     });
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [selectedHeaderFile, setSelectedHeaderFile] = useState<File | null>(null);
@@ -51,7 +52,8 @@ export default function AdminDonations() {
                     bic: data.bic || '',
                     whatsappPhone: data.whatsappPhone || '',
                     imageUrl: data.imageUrl || '',
-                    headerImageUrl: data.headerImageUrl || ''
+                    headerImageUrl: data.headerImageUrl || '',
+                    totalCount: data.totalCount || 0
                 });
             }
         } catch (error) {
@@ -113,6 +115,7 @@ export default function AdminDonations() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     ...formData,
+                    totalCount: Number(formData.totalCount),
                     imageUrl: finalImageUrl,
                     headerImageUrl: finalHeaderImageUrl
                 }),
@@ -179,25 +182,33 @@ export default function AdminDonations() {
                 {/* Statistics & Approval Card */}
                 <div className={styles.card}>
                     <div className={styles.cardHeader}>
-                        <h2>Donation Approvals</h2>
+                        <h2>Donation Tracking</h2>
                     </div>
                     <div className={styles.cardBody}>
-                        <div className={styles.statBox}>
-                            <span className={styles.statLabel}>Total Approved Donations</span>
-                            <span className={styles.statValue}>{settings?.totalCount || 0}</span>
+                        <div className={styles.formGroup}>
+                            <label>Total Donations Raised (€)</label>
+                            <input
+                                type="number"
+                                name="totalCount"
+                                value={formData.totalCount}
+                                onChange={handleInputChange}
+                                placeholder="e.g., 3500"
+                            />
                         </div>
 
                         <p className={styles.hint}>
-                            When you receive a valid receipt image on WhatsApp from a donor, click below to increment the public counter.
+                            You can manually update the total donation amount here for now. Later this will be API integrated.
+                            You can also use the quick +1 button below.
                         </p>
 
                         <button
-                            className={`btn btn-primary ${styles.fullWidth}`}
+                            type="button"
+                            className={`btn btn-secondary ${styles.fullWidth}`}
                             onClick={handleIncrementDonation}
                             disabled={isIncrementing}
                         >
                             {isIncrementing ? <FiRefreshCw className="spin" /> : <FiCheckCircle />}
-                            +1 Approve New Donation
+                            +1 Quick Increment
                         </button>
                     </div>
                 </div>
@@ -257,8 +268,8 @@ export default function AdminDonations() {
                             </button>
                         </form>
                     </div>
-                </div>
-            </div>
-        </div>
+                </div >
+            </div >
+        </div >
     );
 }

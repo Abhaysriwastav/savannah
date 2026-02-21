@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import styles from '../projects.module.css';
 import { FiArrowLeft, FiTarget, FiHeart, FiShare2 } from 'react-icons/fi';
 import Link from 'next/link';
@@ -11,6 +12,12 @@ interface ProjectDetailProps {
 
 export default function ProjectDetail({ project }: ProjectDetailProps) {
     const { t } = useLanguage();
+    const [isMounted, setIsMounted] = useState(false);
+
+    useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setIsMounted(true);
+    }, []);
 
     return (
         <div className={styles.detailMain}>

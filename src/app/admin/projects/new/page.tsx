@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import styles from '../adminProjects.module.css';
@@ -11,10 +11,23 @@ export default function NewProject() {
     const [isSaving, setIsSaving] = useState(false);
     const [message, setMessage] = useState({ type: '', text: '' });
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
+    const [existingCategories, setExistingCategories] = useState<string[]>([]);
+    const [isAddingNewCategory, setIsAddingNewCategory] = useState(false);
+    const [newCategory, setNewCategory] = useState('');
+
+    useEffect(() => {
+        fetch('/api/categories')
+            .then(res => res.json())
+            .then(data => {
+                if (Array.isArray(data)) setExistingCategories(data);
+            })
+            .catch(err => console.error("Failed to fetch categories:", err));
+    }, []);
 
     const [formData, setFormData] = useState({
         title: '',
         description: '',
+        category: 'General',
         bullet1: '',
         bullet2: '',
         bullet3: '',
@@ -60,7 +73,11 @@ export default function NewProject() {
             const res = await fetch('/api/projects', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ ...formData, imageUrl: finalImageUrl }),
+                body: JSON.stringify({
+                    ...formData,
+                    category: isAddingNewCategory ? newCategory : formData.category,
+                    imageUrl: finalImageUrl
+                }),
             });
 
             if (res.ok) {
@@ -112,6 +129,43 @@ export default function NewProject() {
                         <div className={styles.formGroup}>
                             <label>Project Title *</label>
                             <input type="text" name="title" value={formData.title} onChange={handleInputChange} required />
+                        </div>
+
+                        <div className={styles.formGroup}>
+                            <label>Project Category *</label>
+                            <select
+                                name="category"
+                                value={isAddingNewCategory ? 'new' : formData.category}
+                                onChange={(e: any) => {
+                                    if (e.target.value === 'new') {
+                                        setIsAddingNewCategory(true);
+                                    } else {
+                                        setIsAddingNewCategory(false);
+                                        setFormData({ ...formData, category: e.target.value });
+                                    }
+                                }}
+                                required
+                                style={{ padding: '0.75rem', borderRadius: '4px', border: '1px solid var(--border)', background: 'var(--surface)', color: 'var(--text-primary)', width: '100%' }}
+                            >
+                                {existingCategories.map(cat => (
+                                    <option key={cat} value={cat}>{cat}</option>
+                                ))}
+                                {!existingCategories.includes(formData.category) && formData.category && (
+                                    <option value={formData.category}>{formData.category}</option>
+                                )}
+                                <option value="new">+ Add New Category...</option>
+                            </select>
+
+                            {isAddingNewCategory && (
+                                <input
+                                    type="text"
+                                    placeholder="Enter new category name"
+                                    value={newCategory}
+                                    onChange={(e) => setNewCategory(e.target.value)}
+                                    required
+                                    style={{ marginTop: '8px', padding: '0.75rem', borderRadius: '4px', border: '1px solid var(--primary)', background: 'var(--surface)', color: 'var(--text-primary)', width: '100%' }}
+                                />
+                            )}
                         </div>
 
                         <div className={styles.formGroup}>

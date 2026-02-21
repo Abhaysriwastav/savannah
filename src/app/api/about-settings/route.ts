@@ -1,12 +1,6 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { cookies } from 'next/headers';
-
-async function checkAuth() {
-    const cookieStore = await cookies();
-    const token = cookieStore.get('admin_session');
-    if (!token) throw new Error('Unauthorized');
-}
+import { verifyAuth } from '@/lib/auth';
 
 export async function GET() {
     try {
@@ -19,7 +13,7 @@ export async function GET() {
 
 export async function PUT(request: Request) {
     try {
-        await checkAuth();
+        await verifyAuth(); // Superadmin only
         const data = await request.json();
 
         const existing = await prisma.aboutSettings.findFirst();
@@ -31,6 +25,12 @@ export async function PUT(request: Request) {
                 data: {
                     storyImageUrl: data.storyImageUrl,
                     headerImageUrl: data.headerImageUrl,
+                    missionEn: data.missionEn,
+                    missionDe: data.missionDe,
+                    visionEn: data.visionEn,
+                    visionDe: data.visionDe,
+                    storyEn: data.storyEn,
+                    storyDe: data.storyDe,
                 },
             });
         } else {
@@ -38,6 +38,12 @@ export async function PUT(request: Request) {
                 data: {
                     storyImageUrl: data.storyImageUrl,
                     headerImageUrl: data.headerImageUrl,
+                    missionEn: data.missionEn,
+                    missionDe: data.missionDe,
+                    visionEn: data.visionEn,
+                    visionDe: data.visionDe,
+                    storyEn: data.storyEn,
+                    storyDe: data.storyDe,
                 },
             });
         }

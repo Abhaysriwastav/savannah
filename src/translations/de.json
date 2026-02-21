@@ -130,5 +130,25 @@
         "quickLinks": "Schnellzugriff",
         "contactInfo": "Kontaktinformationen",
         "rights": "Alle Rechte vorbehalten."
+    },
+    "impact": {
+        "title": "Einen echten Unterschied machen",
+        "subtitle": "Unsere Zahlen erzählen eine Geschichte von Engagement, Einigkeit und Hoffnung. Gemeinsam verändern wir Leben über Grenzen hinweg.",
+        "peopleHelped": "Menschen geholfen",
+        "activeProjects": "Aktive Projekte",
+        "eventsHeld": "Impact-Events",
+        "donationsTitle": "Gemeinschaftshilfe"
+    },
+    "search": {
+        "placeholderEvents": "Events nach Titel, Ort oder Beschreibung suchen...",
+        "placeholderProjects": "Projekte nach Titel oder Beschreibung suchen...",
+        "all": "Alle",
+        "noResults": "Keine Ergebnisse für Ihre Kriterien gefunden.",
+        "categories": {
+            "Humanitarian Aid": "Humanitäre Hilfe",
+            "Integration": "Integration",
+            "Education": "Bildung",
+            "General": "Allgemein"
+        }
     }
 }

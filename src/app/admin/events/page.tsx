@@ -21,7 +21,7 @@ export default async function AdminEvents() {
 
             <div className={styles.adminCard}>
                 {events.length === 0 ? (
-                    <p>No events found. Click "Add New Event" to create one.</p>
+                    <p>No events found. Click &quot;Add New Event&quot; to create one.</p>
                 ) : (
                     <table className={styles.table}>
                         <thead>
@@ -33,7 +33,7 @@ export default async function AdminEvents() {
                             </tr>
                         </thead>
                         <tbody>
-                            {events.map((event) => (
+                            {events.map((event: any) => (
                                 <tr key={event.id}>
                                     <td>{event.title}</td>
                                     <td>{new Date(event.date).toLocaleDateString()}</td>

@@ -26,7 +26,8 @@ export default function GalleryCarousel({ images }: { images: Image[] }) {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    const maxIndex = Math.max(0, images.length - visibleSlides);
+    const actualVisibleSlides = Math.min(visibleSlides, images.length || 1);
+    const maxIndex = Math.max(0, images.length - actualVisibleSlides);
 
     const nextSlide = () => {
         setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
@@ -37,7 +38,7 @@ export default function GalleryCarousel({ images }: { images: Image[] }) {
     };
 
     useEffect(() => {
-        if (images.length === 0) return;
+        if (images.length === 0 || maxIndex === 0) return;
         const interval = setInterval(nextSlide, 5000);
         return () => clearInterval(interval);
     }, [images.length, maxIndex]);
@@ -58,8 +59,8 @@ export default function GalleryCarousel({ images }: { images: Image[] }) {
                         <div
                             className={styles.slider}
                             style={{
-                                transform: `translateX(-${currentIndex * (100 / visibleSlides)}%)`,
-                                width: `${(images.length / visibleSlides) * 100}%`
+                                transform: `translateX(-${currentIndex * (100 / images.length)}%)`,
+                                width: `${(images.length / actualVisibleSlides) * 100}%`
                             }}
                         >
                             {images.map((image, index) => (
@@ -82,12 +83,16 @@ export default function GalleryCarousel({ images }: { images: Image[] }) {
                         </div>
                     </div>
 
-                    <button className={`${styles.navButton} ${styles.prev}`} onClick={prevSlide} aria-label="Previous image">
-                        <FiChevronLeft size={24} />
-                    </button>
-                    <button className={`${styles.navButton} ${styles.next}`} onClick={nextSlide} aria-label="Next image">
-                        <FiChevronRight size={24} />
-                    </button>
+                    {maxIndex > 0 && (
+                        <>
+                            <button className={`${styles.navButton} ${styles.prev}`} onClick={prevSlide} aria-label="Previous image">
+                                <FiChevronLeft size={24} />
+                            </button>
+                            <button className={`${styles.navButton} ${styles.next}`} onClick={nextSlide} aria-label="Next image">
+                                <FiChevronRight size={24} />
+                            </button>
+                        </>
+                    )}
                 </div>
 
                 <div className={styles.footer}>

@@ -316,3 +316,87 @@
         max-width: none;
     }
 }
+
+/* Impact Section */
+.impactSection {
+    background: transparent;
+    padding: var(--spacing-xl) 0;
+}
+
+.impactHeader {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+}
+
+.impactHeader h2 {
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    margin-bottom: var(--spacing-sm);
+    color: var(--text-primary);
+}
+
+.impactHeader p {
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.impactGrid {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.impactCard {
+    background: #ffffff;
+    padding: 2.5rem 1.5rem;
+    border-radius: 12px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+    transition: transform 0.3s ease;
+    border: 1px solid rgba(0, 0, 0, 0.02);
+    width: 220px;
+    /* Small fixed width card */
+}
+
+.impactCard:hover {
+    transform: translateY(-5px);
+}
+
+.impactIcon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+}
+
+.impactIcon svg {
+    width: 20px;
+    height: 20px;
+}
+
+.impactNumber {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #2b2d42;
+    font-family: var(--font-heading);
+    line-height: 1;
+}
+
+.impactLabel {
+    color: #6c757d;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    line-height: 1.4;
+}

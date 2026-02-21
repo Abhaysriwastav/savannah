@@ -130,5 +130,25 @@
         "quickLinks": "Quick Links",
         "contactInfo": "Contact Info",
         "rights": "All rights reserved."
+    },
+    "impact": {
+        "title": "Making a Real Difference",
+        "subtitle": "Our numbers tell a story of commitment, unity, and hope. Together, we are changing lives across borders.",
+        "peopleHelped": "People Helped",
+        "activeProjects": "Active Projects",
+        "eventsHeld": "Impact Events",
+        "donationsTitle": "Community Support"
+    },
+    "search": {
+        "placeholderEvents": "Search events by title, location or description...",
+        "placeholderProjects": "Search projects by title or description...",
+        "all": "All",
+        "noResults": "No results found matching your criteria.",
+        "categories": {
+            "Humanitarian Aid": "Humanitarian Aid",
+            "Integration": "Integration",
+            "Education": "Education",
+            "General": "General"
+        }
     }
 }

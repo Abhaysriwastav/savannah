@@ -11,6 +11,7 @@ model Event {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   title       String
   description String
+  category    String   @default("General")
   date        DateTime
   location    String
   imageUrl    String?
@@ -29,6 +30,8 @@ model AdminUser {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
   username     String   @unique
   passwordHash String
+  role         String   @default("superadmin") // 'superadmin' vs 'editor'
+  permissions  String[] @default([]) // Array of allowed access e.g. ['gallery', 'events', 'projects']
   createdAt    DateTime @default(now())
 }
 
@@ -49,6 +52,7 @@ model Project {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   title       String
   description String
+  category    String   @default("General")
   bullet1     String?
   bullet2     String?
   bullet3     String?
@@ -59,9 +63,34 @@ model Project {
  
 model AboutSettings {
   id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  missionEn     String   @default("Our mission is to empower youth.")
+  missionDe     String   @default("Unsere Mission ist es, die Jugend zu stärken.")
+  visionEn      String   @default("Our vision is a better future for all.")
+  visionDe      String   @default("Unsere Vision ist eine bessere Zukunft für alle.")
+  storyEn       String   @default("Savannah United began with a simple idea...")
+  storyDe       String   @default("Savannah United begann mit einer einfachen Idee...")
   storyImageUrl String?
   headerImageUrl String?
   updatedAt     DateTime @updatedAt
+}
+
+model ContactSettings {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  email       String   @default("info@savannahunited.de")
+  phone       String   @default("+49 000 000000")
+  address     String   @default("Berlin, Germany")
+  locationUrl String? // Google Maps embed URL
+  updatedAt   DateTime @updatedAt
+}
+
+model ImpactMetric {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  labelEn   String
+  labelDe   String
+  value     String // e.g., "500+"
+  icon      String // e.g., "users", "book", "heart"
+  order     Int      @default(0)
+  updatedAt DateTime @updatedAt
 }
 
 model PageHeader {

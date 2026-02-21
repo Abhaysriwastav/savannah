@@ -1,25 +1,51 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { cookies } from 'next/headers';
 import { put } from '@vercel/blob';
 
-// Optional: Security check utility
-async function checkAuth() {
-    const cookieStore = await cookies();
-    const token = cookieStore.get('admin_session');
-    if (!token) throw new Error('Unauthorized');
-}
+import { verifyAuth } from '@/lib/auth';
 
 // Handle both singular and plural versions of the Vercel Blob token
 const getBlobToken = () => process.env.BLOB_READ_WRITE_TOKEN || process.env.BLOBS_READ_WRITE_TOKEN;
 
-export async function POST(request: Request) {
+export async function GET(request: NextRequest) {
     try {
-        await checkAuth();
+        const { searchParams } = new URL(request.url);
+        const search = searchParams.get('search');
+        const category = searchParams.get('category');
+
+        const where: any = {};
+        if (search) {
+            where.OR = [
+                { title: { contains: search, mode: 'insensitive' } },
+                { description: { contains: search, mode: 'insensitive' } },
+                { location: { contains: search, mode: 'insensitive' } }
+            ];
+        }
+        if (category && category !== 'All') {
+            where.category = category;
+        }
+
+        const events = await prisma.event.findMany({
+            where,
+            orderBy: { date: 'asc' }
+        });
+
+        return NextResponse.json(events);
+    } catch (error) {
+        console.error("Events fetch error:", error);
+        return NextResponse.json({ error: 'Failed to fetch events' }, { status: 500 });
+    }
+}
+
+export async function POST(request: NextRequest) {
+    try {
+        await verifyAuth('manage_events');
 
         const formData = await request.formData();
         const title = formData.get('title') as string;
         const description = formData.get('description') as string;
+        const category = formData.get('category') as string || 'General';
         const dateStr = formData.get('date') as string;
         const location = formData.get('location') as string;
         const file = formData.get('image') as File | null;
@@ -27,7 +53,6 @@ export async function POST(request: Request) {
         let imageUrl = null;
 
         if (file) {
-            // Upload to Vercel Blob - use 'public' as store is now public
             const blob = await put(file.name, file, {
                 access: 'public',
                 token: getBlobToken(),
@@ -40,6 +65,7 @@ export async function POST(request: Request) {
             data: {
                 title,
                 description,
+                category,
                 date: new Date(dateStr),
                 location,
                 imageUrl,
@@ -47,8 +73,8 @@ export async function POST(request: Request) {
         });
 
         return NextResponse.json(event, { status: 201 });
-    } catch (error) {
-        console.error(error);
-        return NextResponse.json({ error: 'Failed to create event' }, { status: 500 });
+    } catch (error: any) {
+        console.error("Event creation error:", error);
+        return NextResponse.json({ error: 'Failed to create event', details: error.message }, { status: 500 });
     }
 }

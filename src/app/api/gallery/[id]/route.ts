@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { cookies } from 'next/headers';
+import { verifyAuth } from '@/lib/auth';
 import { unlink } from 'fs/promises';
 import path from 'path';
 
@@ -9,16 +9,8 @@ export async function DELETE(
     { params }: { params: Promise<{ id: string }> }
 ) {
     try {
+        await verifyAuth('manage_gallery');
         const { id } = await params;
-        const cookieStore = await cookies();
-        const token = cookieStore.get('admin_session');
-
-        if (!token) {
-            console.log('API Delete Image: Unauthorized');
-            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-        }
-
-        console.log(`API: Attempting to delete image with ID: ${id}`);
 
         // Get the image first to find its URL
         const image = await prisma.galleryImage.findUnique({

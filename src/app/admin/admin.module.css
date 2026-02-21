@@ -1,13 +1,15 @@
 .adminContainer {
     display: flex;
     min-height: 100vh;
-    background-color: var(--background);
+    background-color: #f8fafc;
+    color: #1e293b;
+    font-family: 'Inter', sans-serif;
 }
 
 .sidebar {
     width: 280px;
-    background-color: var(--surface);
-    border-right: 1px solid var(--border);
+    background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+    color: white;
     display: flex;
     flex-direction: column;
     position: fixed;
@@ -15,41 +17,50 @@
     left: 0;
     top: 0;
     z-index: 100;
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.1);
 }
 
 .sidebarHeader {
-    padding: var(--spacing-lg);
-    border-bottom: 1px solid var(--border);
+    padding: 2.5rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
 .sidebarHeader h2 {
-    font-size: 1.25rem;
-    color: var(--text-primary);
-    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    background: linear-gradient(45deg, #e07a5f, #f2cc8f);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .sidebarNav {
-    padding: var(--spacing-md);
+    padding: 1rem;
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-sm);
+    gap: 0.5rem;
     flex-grow: 1;
 }
 
 .navItem {
     display: flex;
     align-items: center;
-    gap: var(--spacing-sm);
-    padding: var(--spacing-sm) var(--spacing-md);
-    border-radius: var(--radius-md);
-    color: var(--text-secondary);
+    gap: 12px;
+    padding: 0.875rem 1.25rem;
+    border-radius: 12px;
+    color: #94a3b8;
     font-weight: 500;
-    transition: all var(--transition-fast);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-decoration: none;
 }
 
-.navItem:hover {
-    background-color: rgba(224, 122, 95, 0.1);
-    color: var(--primary);
+.navItem:hover,
+.navItemActive {
+    background: rgba(224, 122, 95, 0.15);
+    color: #e07a5f;
+    transform: translateX(4px);
 }
 
 .icon {
@@ -58,83 +69,174 @@
 
 .divider {
     height: 1px;
-    background-color: var(--border);
-    margin: var(--spacing-sm) 0;
+    background: rgba(255, 255, 255, 0.1);
+    margin: 1rem 1.25rem;
 }
 
 .logoutText {
-    color: var(--error);
+    color: #f87171;
     margin-top: auto;
+    margin-bottom: 2rem;
 }
 
 .logoutText:hover {
-    background-color: rgba(230, 57, 70, 0.1);
-    color: var(--error);
+    background: rgba(248, 113, 113, 0.1);
+    color: #f87171;
 }
 
 .mainContent {
     flex-grow: 1;
     margin-left: 280px;
-    /* match sidebar width */
     min-height: 100vh;
+    background-image:
+        radial-gradient(at 0% 0%, rgba(224, 122, 95, 0.05) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(242, 204, 143, 0.05) 0px, transparent 50%);
 }
 
 .contentWrapper {
-    padding: var(--spacing-xl);
-    max-width: 1200px;
+    padding: 3rem;
+    max-width: 1400px;
     margin: 0 auto;
 }
 
-/* Page headers inside admin */
 .pageHeader {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: var(--spacing-xl);
-    padding-bottom: var(--spacing-md);
-    border-bottom: 1px solid var(--border);
+    margin-bottom: 2.5rem;
 }
 
 .pageHeader h1 {
-    font-size: 2rem;
-    margin: 0;
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: #0f172a;
+    letter-spacing: -1px;
 }
 
-/* Common form styles for admin */
 .adminCard {
-    background-color: var(--surface);
-    border-radius: var(--radius-lg);
-    padding: var(--spacing-lg);
-    box-shadow: var(--shadow-sm);
-    border: 1px solid var(--border);
+    background: white;
+    border-radius: 24px;
+    padding: 2.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 10px 15px -3px rgba(0, 0, 0, 0.03);
+    border: 1px solid #f1f5f9;
 }
 
 .formGrid {
     display: grid;
-    gap: var(--spacing-lg);
+    gap: 2rem;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.formGroup label {
+    font-weight: 600;
+    color: #475569;
+    font-size: 0.9375rem;
+}
+
+.formGroup input,
+.formGroup textarea,
+.formGroup select {
+    padding: 0.875rem 1rem;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    background: #f8fafc;
+    transition: all 0.2s;
+    font-size: 1rem;
+}
+
+.formGroup input:focus,
+.formGroup textarea:focus,
+.formGroup select:focus {
+    outline: none;
+    border-color: #e07a5f;
+    background: white;
+    box-shadow: 0 0 0 4px rgba(224, 122, 95, 0.1);
+}
+
+.tableContainer {
+    overflow-x: auto;
+    border-radius: 20px;
+    border: 1px solid #f1f5f9;
 }
 
 .table {
     width: 100%;
     border-collapse: collapse;
-}
-
-.table th,
-.table td {
-    padding: var(--spacing-md);
-    text-align: left;
-    border-bottom: 1px solid var(--border);
+    background: white;
 }
 
 .table th {
-    font-weight: 600;
-    color: var(--text-secondary);
-    background-color: rgba(0, 0, 0, 0.02);
+    background: #f8fafc;
+    padding: 1.25rem 1.5rem;
+    text-align: left;
+    font-weight: 700;
+    color: #64748b;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.table td {
+    padding: 1.25rem 1.5rem;
+    border-top: 1px solid #f1f5f9;
+    color: #334155;
+}
+
+.table tr:hover {
+    background-color: #fbfcfe;
 }
 
 .actionCell {
     display: flex;
-    gap: var(--spacing-sm);
+    gap: 0.75rem;
+}
+
+/* Dashboard Stats Redesign */
+.statsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+}
+
+.statCard {
+    background: white;
+    padding: 2rem;
+    border-radius: 24px;
+    border: 1px solid #f1f5f9;
+    transition: transform 0.3s;
+}
+
+.statCard:hover {
+    transform: translateY(-5px);
+}
+
+.statIcon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin-bottom: 1.25rem;
+}
+
+.statValue {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #0f172a;
+    display: block;
+}
+
+.statLabel {
+    color: #64748b;
+    font-weight: 500;
 }
 
 /* Gallery Manager Specific Styles */

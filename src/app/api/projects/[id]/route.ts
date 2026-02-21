@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { verifyAuth } from "@/lib/auth";
 
 export async function GET(
     request: NextRequest,
@@ -27,6 +28,7 @@ export async function PUT(
 ) {
     const params = await context.params;
     try {
+        await verifyAuth('manage_projects');
         const body = await request.json();
 
         if (!body.title || !body.description) {
@@ -38,6 +40,7 @@ export async function PUT(
             data: {
                 title: body.title,
                 description: body.description,
+                category: body.category || 'General',
                 bullet1: body.bullet1,
                 bullet2: body.bullet2,
                 bullet3: body.bullet3,
@@ -46,8 +49,9 @@ export async function PUT(
         });
 
         return NextResponse.json(updatedProject);
-    } catch (error) {
-        return NextResponse.json({ error: "Failed to update project" }, { status: 500 });
+    } catch (error: any) {
+        console.error("Project update error:", error);
+        return NextResponse.json({ error: "Failed to update project", details: error.message }, { status: 500 });
     }
 }
 

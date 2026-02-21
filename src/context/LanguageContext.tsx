@@ -24,8 +24,10 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     useEffect(() => {
         const savedLang = localStorage.getItem('language') as Language;
         if (savedLang && (savedLang === 'en' || savedLang === 'de')) {
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setLanguage(savedLang);
         }
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setIsLoaded(true);
     }, []);
 
@@ -37,11 +39,11 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     const t = (path: string) => {
         const dict = dictionaries[language];
         const keys = path.split('.');
-        let result: any = dict;
+        let result: unknown = dict;
 
         for (const key of keys) {
-            if (result && result[key]) {
-                result = result[key];
+            if (result && typeof result === 'object' && (result as any)[key]) {
+                result = (result as any)[key];
             } else {
                 return path; // Fallback to key name if not found
             }

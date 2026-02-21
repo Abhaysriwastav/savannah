@@ -1,14 +1,12 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { cookies } from 'next/headers';
+import { verifyAuth } from '@/lib/auth';
 import { unlink } from 'fs/promises';
 import path from 'path';
 
 export async function POST(request: Request) {
     try {
-        const cookieStore = await cookies();
-        const token = cookieStore.get('admin_session');
-        if (!token) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+        await verifyAuth('manage_gallery');
 
         const body = await request.json();
         const { imageIds } = body;
@@ -34,7 +32,7 @@ export async function POST(request: Request) {
                     await unlink(filePath);
                 }
             } catch (fsError) {
-                console.warn(`Failed to delete file ${image.url} from filesystem:`, fsError);
+                console.warn(`Failed to delete file ${image.url} from filesystem: `, fsError);
             }
         }
 

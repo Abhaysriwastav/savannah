@@ -1,12 +1,6 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { cookies } from 'next/headers';
-
-async function checkAuth() {
-    const cookieStore = await cookies();
-    const token = cookieStore.get('admin_session');
-    if (!token) throw new Error('Unauthorized');
-}
+import { verifyAuth } from '@/lib/auth';
 
 export async function DELETE(
     request: Request,
@@ -16,7 +10,7 @@ export async function DELETE(
         const { id } = await params;
         console.log(`API: Attempting to delete event with ID: ${id}`);
 
-        await checkAuth();
+        await verifyAuth('manage_events');
         console.log('API: Auth check passed');
 
         const deletedEvent = await prisma.event.delete({

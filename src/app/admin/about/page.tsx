@@ -9,6 +9,12 @@ export default function AdminAbout() {
     const [isLoading, setIsLoading] = useState(true);
     const [isSaving, setIsSaving] = useState(false);
     const [message, setMessage] = useState({ type: '', text: '' });
+    const [missionEn, setMissionEn] = useState('');
+    const [missionDe, setMissionDe] = useState('');
+    const [visionEn, setVisionEn] = useState('');
+    const [visionDe, setVisionDe] = useState('');
+    const [storyEn, setStoryEn] = useState('');
+    const [storyDe, setStoryDe] = useState('');
     const [imageUrl, setImageUrl] = useState('');
     const [headerImageUrl, setHeaderImageUrl] = useState('');
     const [selectedStoryFile, setSelectedStoryFile] = useState<File | null>(null);
@@ -25,6 +31,12 @@ export default function AdminAbout() {
                 const data = await res.json();
                 setImageUrl(data.storyImageUrl || '');
                 setHeaderImageUrl(data.headerImageUrl || '');
+                setMissionEn(data.missionEn || '');
+                setMissionDe(data.missionDe || '');
+                setVisionEn(data.visionEn || '');
+                setVisionDe(data.visionDe || '');
+                setStoryEn(data.storyEn || '');
+                setStoryDe(data.storyDe || '');
             }
         } catch (error) {
             console.error("Failed to fetch settings", error);
@@ -81,7 +93,13 @@ export default function AdminAbout() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     storyImageUrl: finalStoryImageUrl,
-                    headerImageUrl: finalHeaderImageUrl
+                    headerImageUrl: finalHeaderImageUrl,
+                    missionEn,
+                    missionDe,
+                    visionEn,
+                    visionDe,
+                    storyEn,
+                    storyDe
                 }),
             });
 
@@ -99,79 +117,114 @@ export default function AdminAbout() {
             setMessage({ type: 'error', text: `An error occurred: ${error.message || 'Unknown error'}` });
         } finally {
             setIsSaving(false);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     };
 
     if (isLoading) return <div className={styles.loading}>Loading settings...</div>;
 
     return (
-        <div className={styles.container}>
+        <div className="animate-fade-in">
             <header className={styles.pageHeader}>
                 <div>
-                    <Link href="/admin" style={{ display: 'flex', alignItems: 'center', gap: '5px', color: 'var(--text-secondary)', marginBottom: '10px', textDecoration: 'none' }}>
-                        <FiArrowLeft /> Back to Dashboard
-                    </Link>
-                    <h1>About Us Settings</h1>
+                    <h1>Manage About Us</h1>
                 </div>
             </header>
 
             {message.text && (
-                <div className={`${styles.alert} ${styles[message.type]}`}>
+                <div className={`${styles.alert} ${styles[message.type]}`} style={{ marginBottom: '2rem', padding: '1rem', borderRadius: '12px', background: message.type === 'success' ? '#dcfce7' : '#fee2e2', color: message.type === 'success' ? '#166534' : '#991b1b' }}>
                     {message.text}
                 </div>
             )}
 
-            <div className={styles.adminCard} style={{ maxWidth: '600px' }}>
-                <div className={styles.cardHeader}>
-                    <h2><FiImage /> Header & Impact Images</h2>
-                </div>
-                <div className={styles.cardBody}>
-                    <form onSubmit={handleSave} className={styles.formGrid}>
-                        {/* Page Header Section */}
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', paddingBottom: '2rem', borderBottom: '1px solid var(--border)', marginBottom: '2rem' }}>
-                            <label style={{ fontWeight: 700, fontSize: '1.1rem' }}>Page Header Background Image</label>
-                            {headerImageUrl && !selectedHeaderFile && (
-                                <div style={{ position: 'relative', width: '100%', aspectRatio: '21/9', borderRadius: '8px', overflow: 'hidden', border: '1px solid var(--border)' }}>
-                                    <img src={headerImageUrl} alt="Header Background" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                                </div>
-                            )}
-                            {selectedHeaderFile && (
-                                <div style={{ padding: '1rem', backgroundColor: 'rgba(224, 122, 95, 0.1)', borderRadius: '8px', border: '1px dashed var(--primary)', textAlign: 'center' }}>
-                                    <p style={{ color: 'var(--primary)', fontWeight: 600 }}>New header selected: {selectedHeaderFile.name}</p>
-                                    <button type="button" onClick={() => setSelectedHeaderFile(null)} className="btn btn-outline" style={{ marginTop: '0.5rem', padding: '0.3rem 0.6rem' }}>Cancel</button>
-                                </div>
-                            )}
-                            <input type="file" accept="image/*" onChange={handleHeaderFileChange} />
-                            <small style={{ color: 'var(--text-secondary)' }}>This image will appear behind the "About Savannah United" title.</small>
+            <form onSubmit={handleSave} className={styles.formGrid}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
+                    {/* Mission & Vision */}
+                    <div className={styles.adminCard}>
+                        <h2 style={{ marginBottom: '1.5rem', fontWeight: 700 }}>Mission & Vision</h2>
+                        <div className={styles.formGrid}>
+                            <div className={styles.formGroup}>
+                                <label>Mission (English)</label>
+                                <textarea
+                                    value={missionEn}
+                                    onChange={(e) => setMissionEn(e.target.value)}
+                                    rows={3}
+                                />
+                            </div>
+                            <div className={styles.formGroup}>
+                                <label>Mission (German)</label>
+                                <textarea
+                                    value={missionDe}
+                                    onChange={(e) => setMissionDe(e.target.value)}
+                                    rows={3}
+                                />
+                            </div>
+                            <div className={styles.formGroup}>
+                                <label>Vision (English)</label>
+                                <textarea
+                                    value={visionEn}
+                                    onChange={(e) => setVisionEn(e.target.value)}
+                                    rows={3}
+                                />
+                            </div>
+                            <div className={styles.formGroup}>
+                                <label>Vision (German)</label>
+                                <textarea
+                                    value={visionDe}
+                                    onChange={(e) => setVisionDe(e.target.value)}
+                                    rows={3}
+                                />
+                            </div>
                         </div>
+                    </div>
 
-                        {/* Story Image Section */}
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                            <label style={{ fontWeight: 700, fontSize: '1.1rem' }}>Community Impact Image</label>
-
-                            {imageUrl && !selectedStoryFile && (
-                                <div style={{ position: 'relative', width: '100%', aspectRatio: '16/9', borderRadius: '8px', overflow: 'hidden', border: '1px solid var(--border)' }}>
-                                    <img src={imageUrl} alt="Community Impact" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                                </div>
-                            )}
-
-                            {selectedStoryFile && (
-                                <div style={{ padding: '1rem', backgroundColor: 'rgba(224, 122, 95, 0.1)', borderRadius: '8px', border: '1px dashed var(--primary)', textAlign: 'center' }}>
-                                    <p style={{ color: 'var(--primary)', fontWeight: 600 }}>New impact image selected: {selectedStoryFile.name}</p>
-                                    <button type="button" onClick={() => setSelectedStoryFile(null)} className="btn btn-outline" style={{ marginTop: '0.5rem', padding: '0.3rem 0.6rem' }}>Cancel</button>
-                                </div>
-                            )}
-
-                            <input type="file" accept="image/*" onChange={handleStoryFileChange} />
-                            <small style={{ color: 'var(--text-secondary)' }}>This image is shown in the "Our Impact" section.</small>
+                    {/* Images */}
+                    <div className={styles.adminCard}>
+                        <h2 style={{ marginBottom: '1.5rem', fontWeight: 700 }}>Page Images</h2>
+                        <div className={styles.formGrid}>
+                            <div className={styles.formGroup}>
+                                <label>Header Background Banner</label>
+                                <input type="file" onChange={handleHeaderFileChange} accept="image/*" />
+                                {headerImageUrl && <img src={headerImageUrl} style={{ width: '100px', borderRadius: '8px', marginTop: '10px' }} />}
+                            </div>
+                            <div className={styles.formGroup}>
+                                <label>Story / Influence Image</label>
+                                <input type="file" onChange={handleStoryFileChange} accept="image/*" />
+                                {imageUrl && <img src={imageUrl} style={{ width: '100px', borderRadius: '8px', marginTop: '10px' }} />}
+                            </div>
                         </div>
-
-                        <button type="submit" className="btn btn-primary" disabled={isSaving} style={{ marginTop: '1rem' }}>
-                            {isSaving ? 'Saving...' : <><FiSave /> Update About Us</>}
-                        </button>
-                    </form>
+                    </div>
                 </div>
-            </div>
+
+                {/* Our Story */}
+                <div className={styles.adminCard}>
+                    <h2 style={{ marginBottom: '1.5rem', fontWeight: 700 }}>Our Story</h2>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
+                        <div className={styles.formGroup}>
+                            <label>Our Story Content (English)</label>
+                            <textarea
+                                value={storyEn}
+                                onChange={(e) => setStoryEn(e.target.value)}
+                                rows={10}
+                            />
+                        </div>
+                        <div className={styles.formGroup}>
+                            <label>Unsere Geschichte (German)</label>
+                            <textarea
+                                value={storyDe}
+                                onChange={(e) => setStoryDe(e.target.value)}
+                                rows={10}
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                    <button type="submit" className="btn btn-primary" disabled={isSaving} style={{ padding: '1rem 3rem', fontSize: '1.1rem' }}>
+                        {isSaving ? 'Saving Changes...' : <><FiSave /> Save All Settings</>}
+                    </button>
+                </div>
+            </form>
         </div>
     );
 }

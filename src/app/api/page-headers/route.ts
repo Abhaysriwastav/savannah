@@ -1,12 +1,6 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { cookies } from 'next/headers';
-
-async function checkAuth() {
-    const cookieStore = await cookies();
-    const token = cookieStore.get('admin_session');
-    if (!token) throw new Error('Unauthorized');
-}
+import { verifyAuth } from '@/lib/auth';
 
 export async function GET() {
     try {
@@ -33,9 +27,9 @@ export async function GET() {
 
 export async function PUT(request: Request) {
     try {
-        await checkAuth();
-        const data = await request.json();
-        const { page, imageUrl } = data;
+        await verifyAuth(); // Superadmin only
+        const body = await request.json();
+        const { page, imageUrl } = body;
 
         if (!page || !imageUrl) {
             return NextResponse.json({ error: 'Page and imageUrl are required' }, { status: 400 });

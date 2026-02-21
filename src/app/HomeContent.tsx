@@ -1,9 +1,10 @@
 'use client';
 
+import { useState, useEffect } from "react";
 import Link from "next/image";
 import NextLink from "next/link";
 import styles from "./page.module.css";
-import { FiHeart, FiUsers, FiBookOpen, FiCalendar, FiMapPin } from "react-icons/fi";
+import { FiHeart, FiUsers, FiBookOpen, FiCalendar, FiMapPin, FiTarget } from "react-icons/fi";
 import GalleryCarousel from "@/components/GalleryCarousel";
 import HeroSlider from "@/components/HeroSlider";
 import { useLanguage } from "@/context/LanguageContext";
@@ -14,8 +15,14 @@ interface HomeContentProps {
     latestProject: any;
 }
 
-export default function HomeContent({ events, galleryImages, latestProject }: HomeContentProps) {
+export default function HomeContent({ events, galleryImages, latestProject }: { events: any[], galleryImages: any[], latestProject: any }) {
     const { t } = useLanguage();
+    const [isMounted, setIsMounted] = useState(false);
+
+    useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setIsMounted(true);
+    }, []);
 
     return (
         <main className={styles.main}>
@@ -61,6 +68,9 @@ export default function HomeContent({ events, galleryImages, latestProject }: Ho
                     </div>
                 </div>
             </section>
+
+            {/* Impact Dashboard Section */}
+            <ImpactSection />
 
             {/* Featured Project Section */}
             {latestProject && (
@@ -130,7 +140,10 @@ export default function HomeContent({ events, galleryImages, latestProject }: Ho
                                         <div style={{ padding: 'var(--spacing-lg)', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
                                             <h3 style={{ marginBottom: 'var(--spacing-sm)', color: 'var(--text-primary)' }}>{event.title}</h3>
                                             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: 'var(--spacing-md)', paddingBottom: 'var(--spacing-sm)', borderBottom: '1px solid var(--border)', fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
-                                                <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><FiCalendar color="var(--primary)" /> {new Date(event.date).toLocaleDateString()}</span>
+                                                <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                                    <FiCalendar color="var(--primary)" />
+                                                    {isMounted ? new Date(event.date).toLocaleDateString() : ''}
+                                                </span>
                                                 <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><FiMapPin color="var(--primary)" /> {event.location}</span>
                                             </div>
                                             <p style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{event.description}</p>
@@ -174,4 +187,102 @@ export default function HomeContent({ events, galleryImages, latestProject }: Ho
             </section>
         </main>
     );
+}
+
+function ImpactSection() {
+    const { t, language } = useLanguage();
+    const [metrics, setMetrics] = useState<any[]>([]);
+    const [isVisible, setIsVisible] = useState(false);
+
+    useEffect(() => {
+        const fetchMetrics = async () => {
+            try {
+                const res = await fetch('/api/impact');
+                if (res.ok) {
+                    const data = await res.json();
+                    setMetrics(data);
+                }
+            } catch (error) {
+                console.error('Failed to fetch metrics');
+            }
+        };
+        fetchMetrics();
+        setIsVisible(true);
+    }, []);
+
+    const getIcon = (iconName: string) => {
+        switch (iconName) {
+            case 'users': return <FiUsers size={30} color="var(--primary)" />;
+            case 'target': return <FiTarget size={30} color="#84AC96" />;
+            case 'calendar': return <FiCalendar size={30} color="#F2CC8F" />;
+            case 'heart': return <FiHeart size={30} color="#3D5A80" />;
+            default: return <FiHeart size={30} color="var(--primary)" />;
+        }
+    };
+
+    const getBgColor = (iconName: string) => {
+        switch (iconName) {
+            case 'users': return 'rgba(224, 122, 95, 0.1)';
+            case 'target': return 'rgba(132, 172, 150, 0.1)';
+            case 'calendar': return 'rgba(242, 204, 143, 0.1)';
+            case 'heart': return 'rgba(61, 90, 128, 0.1)';
+            default: return 'rgba(224, 122, 95, 0.1)';
+        }
+    };
+
+    if (!metrics || metrics.length === 0) return null;
+
+    return (
+        <section className={`${styles.impactSection} section`}>
+            <div className="container">
+                <div className={styles.impactHeader}>
+                    <h2>{t('impact.title')}</h2>
+                    <p>{t('impact.subtitle')}</p>
+                </div>
+
+                <div className={styles.impactGrid}>
+                    {metrics.map((metric: any) => (
+                        <div key={metric.id} className={styles.impactCard}>
+                            <div className={styles.impactIcon} style={{ background: getBgColor(metric.icon) }}>
+                                {getIcon(metric.icon)}
+                            </div>
+                            <div className={styles.impactNumber}>
+                                {isVisible ? (
+                                    metric.value.includes('+') ? (
+                                        <Counter end={parseInt(metric.value.replace(/\D/g, ''))} suffix="+" />
+                                    ) : metric.value.startsWith('€') ? (
+                                        <Counter end={parseInt(metric.value.replace(/\D/g, ''))} prefix="€" />
+                                    ) : (
+                                        <Counter end={parseInt(metric.value.replace(/\D/g, ''))} />
+                                    )
+                                ) : '0'}
+                            </div>
+                            <div className={styles.impactLabel}>{language === 'en' ? metric.labelEn : metric.labelDe}</div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </section>
+    );
+}
+
+function Counter({ end, duration = 2000, suffix = '', prefix = '' }: { end: number, duration?: number, suffix?: string, prefix?: string }) {
+    const [count, setCount] = useState(0);
+
+    useEffect(() => {
+        let start = 0;
+        const increment = end / (duration / 16); // 60fps
+        const timer = setInterval(() => {
+            start += increment;
+            if (start >= end) {
+                setCount(end);
+                clearInterval(timer);
+            } else {
+                setCount(Math.floor(start));
+            }
+        }, 16);
+        return () => clearInterval(timer);
+    }, [end, duration]);
+
+    return <span>{prefix}{count.toLocaleString()}{suffix}</span>;
 }

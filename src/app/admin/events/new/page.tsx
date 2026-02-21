@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import styles from '../../admin.module.css';
@@ -11,10 +11,23 @@ export default function NewEvent() {
     const [formData, setFormData] = useState({
         title: '',
         description: '',
+        category: 'General',
         date: '',
         location: '',
     });
     const [imageFile, setImageFile] = useState<File | null>(null);
+    const [existingCategories, setExistingCategories] = useState<string[]>([]);
+    const [isAddingNewCategory, setIsAddingNewCategory] = useState(false);
+    const [newCategory, setNewCategory] = useState('');
+
+    useEffect(() => {
+        fetch('/api/categories')
+            .then(res => res.json())
+            .then(data => {
+                if (Array.isArray(data)) setExistingCategories(data);
+            })
+            .catch(err => console.error("Failed to fetch categories:", err));
+    }, []);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -33,6 +46,7 @@ export default function NewEvent() {
         const formPayload = new FormData();
         formPayload.append('title', formData.title);
         formPayload.append('description', formData.description);
+        formPayload.append('category', isAddingNewCategory ? newCategory : formData.category);
         formPayload.append('date', formData.date);
         formPayload.append('location', formData.location);
         if (imageFile) {
@@ -94,6 +108,44 @@ export default function NewEvent() {
                             required
                             style={{ padding: '0.75rem', borderRadius: '4px', border: '1px solid var(--border)' }}
                         />
+                    </div>
+
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                        <label htmlFor="category">Category</label>
+                        <select
+                            id="category"
+                            name="category"
+                            value={isAddingNewCategory ? 'new' : formData.category}
+                            onChange={(e) => {
+                                if (e.target.value === 'new') {
+                                    setIsAddingNewCategory(true);
+                                } else {
+                                    setIsAddingNewCategory(false);
+                                    setFormData({ ...formData, category: e.target.value });
+                                }
+                            }}
+                            required
+                            style={{ padding: '0.75rem', borderRadius: '4px', border: '1px solid var(--border)', background: 'var(--surface)', color: 'var(--text-primary)' }}
+                        >
+                            {existingCategories.map(cat => (
+                                <option key={cat} value={cat}>{cat}</option>
+                            ))}
+                            {!existingCategories.includes(formData.category) && formData.category && (
+                                <option value={formData.category}>{formData.category}</option>
+                            )}
+                            <option value="new">+ Add New Category...</option>
+                        </select>
+
+                        {isAddingNewCategory && (
+                            <input
+                                type="text"
+                                placeholder="Enter new category name"
+                                value={newCategory}
+                                onChange={(e) => setNewCategory(e.target.value)}
+                                required
+                                style={{ marginTop: '8px', padding: '0.75rem', borderRadius: '4px', border: '1px solid var(--primary)', background: 'var(--surface)', color: 'var(--text-primary)' }}
+                            />
+                        )}
                     </div>
 
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>

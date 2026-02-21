@@ -56,7 +56,7 @@ export default function AdminProjectsList() {
             <header className={styles.header}>
                 <div>
                     <h1 className={styles.title}>Manage Projects</h1>
-                    <p className={styles.subtitle}>Create, edit, and reorganize your organization's projects.</p>
+                    <p className={styles.subtitle}>Create, edit, and reorganize your organization&apos;s projects.</p>
                 </div>
                 <Link href="/admin/projects/new" className="btn btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                     <FiPlus /> Add New Project
