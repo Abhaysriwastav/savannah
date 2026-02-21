@@ -109,10 +109,18 @@
     gap: var(--spacing-lg);
 }
 
+.statWrapper {
+    height: 100%;
+    border-radius: var(--radius-lg);
+    /* For react-parallax-tilt to inherit border radius */
+}
+
 .stat {
     display: flex;
     flex-direction: column;
     gap: var(--spacing-xs);
+    padding: var(--spacing-xl);
+    height: 100%;
 }
 
 .stat h3 {
@@ -262,11 +270,6 @@
     text-align: center;
     gap: var(--spacing-md);
     background-color: var(--surface);
-    transition: transform var(--transition-normal);
-}
-
-.ctaCard:hover {
-    transform: translateY(-5px);
 }
 
 .ctaCard h3 {
