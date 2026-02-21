@@ -37,15 +37,9 @@ export async function POST(request: NextRequest) {
     try {
         await verifyAuth('manage_projects');
 
-        const formData = await request.formData();
+        const body = await request.json();
 
-        const title = formData.get('title') as string;
-        const description = formData.get('description') as string;
-        const category = formData.get('category') as string;
-        const bullet1 = formData.get('bullet1') as string;
-        const bullet2 = formData.get('bullet2') as string;
-        const bullet3 = formData.get('bullet3') as string;
-        const imageUrl = formData.get('imageUrl') as string;
+        const { title, description, category, bullet1, bullet2, bullet3, imageUrl } = body;
 
         // Basic validation
         if (!title || !description) {
