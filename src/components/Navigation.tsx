@@ -19,6 +19,7 @@ export default function Navigation() {
         { href: '/events', label: t('common.events') },
         { href: '/projects', label: t('common.projects') },
         { href: '/gallery', label: t('common.gallery') },
+        { href: '/volunteer', label: t('common.becomeVolunteer') },
         { href: '/contact', label: t('common.contactUs') },
     ];
 

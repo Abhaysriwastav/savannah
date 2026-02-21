@@ -1,12 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { cookies } from "next/headers";
-
-async function checkAuth() {
-    const cookieStore = await cookies();
-    const token = cookieStore.get('admin_session');
-    if (!token) throw new Error('Unauthorized');
-}
+import { verifyAuth } from "@/lib/auth";
 
 export async function GET() {
     try {
@@ -57,7 +51,7 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
     try {
-        await checkAuth();
+        await verifyAuth('manage_impact');
         const body = await request.json();
         const metric = await prisma.impactMetric.create({
             data: {
@@ -76,7 +70,7 @@ export async function POST(request: NextRequest) {
 
 export async function PUT(request: NextRequest) {
     try {
-        await checkAuth();
+        await verifyAuth('manage_impact');
         const body = await request.json();
         const { id, updatedAt, ...data } = body;
         const updated = await prisma.impactMetric.update({
@@ -91,7 +85,7 @@ export async function PUT(request: NextRequest) {
 
 export async function DELETE(request: NextRequest) {
     try {
-        await checkAuth();
+        await verifyAuth('manage_impact');
         const { searchParams } = new URL(request.url);
         const id = searchParams.get('id');
         if (!id) return NextResponse.json({ error: "ID required" }, { status: 400 });

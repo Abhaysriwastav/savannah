@@ -31,7 +31,13 @@ export default function AdminUsers() {
     const AVAILABLE_PERMISSIONS = [
         { id: 'manage_events', label: 'Manage Events' },
         { id: 'manage_projects', label: 'Manage Projects' },
-        { id: 'manage_gallery', label: 'Manage Gallery' }
+        { id: 'manage_gallery', label: 'Manage Gallery' },
+        { id: 'manage_impact', label: 'Manage Impact Metrics' },
+        { id: 'manage_messages', label: 'Manage Messages' },
+        { id: 'manage_donations', label: 'Manage Donations Settings' },
+        { id: 'manage_volunteers', label: 'Manage Volunteers' },
+        { id: 'manage_testimonials', label: 'Manage Testimonials' },
+        { id: 'manage_partners', label: 'Manage Partners' }
     ];
 
     useEffect(() => {

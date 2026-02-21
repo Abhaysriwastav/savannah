@@ -306,6 +306,13 @@
     font-size: 1.1rem;
 }
 
+/* Volunteer Section */
+.volunteerSection {
+    padding: var(--spacing-xxl) 0;
+    position: relative;
+    z-index: 2;
+}
+
 /* CTA Section */
 .ctaSection {
     padding: var(--spacing-xxl) 0;

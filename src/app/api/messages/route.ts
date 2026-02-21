@@ -1,16 +1,10 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { cookies } from 'next/headers';
-
-async function checkAuth() {
-    const cookieStore = await cookies();
-    const token = cookieStore.get('admin_session');
-    if (!token) throw new Error('Unauthorized');
-}
+import { verifyAuth } from '@/lib/auth';
 
 export async function GET() {
     try {
-        await checkAuth();
+        await verifyAuth('manage_messages');
         const messages = await prisma.contactMessage.findMany({
             orderBy: { createdAt: 'desc' }
         });
@@ -25,7 +19,7 @@ export async function GET() {
 
 export async function PATCH(request: Request) {
     try {
-        await checkAuth();
+        await verifyAuth('manage_messages');
         const data = await request.json();
         const { id, status } = data;
 
@@ -49,7 +43,7 @@ export async function PATCH(request: Request) {
 
 export async function DELETE(request: Request) {
     try {
-        await checkAuth();
+        await verifyAuth('manage_messages');
         const { searchParams } = new URL(request.url);
         const id = searchParams.get('id');
 

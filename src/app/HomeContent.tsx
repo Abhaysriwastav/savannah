@@ -7,6 +7,8 @@ import styles from "./page.module.css";
 import { FiHeart, FiUsers, FiBookOpen, FiCalendar, FiMapPin, FiTarget } from "react-icons/fi";
 import GalleryCarousel from "@/components/GalleryCarousel";
 import HeroSlider from "@/components/HeroSlider";
+import PartnersMarquee from "@/components/PartnersMarquee";
+import TestimonialCarousel from "@/components/TestimonialCarousel";
 import { useLanguage } from "@/context/LanguageContext";
 import { motion, Variants } from "framer-motion";
 import Tilt from "react-parallax-tilt";
@@ -111,8 +113,8 @@ export default function HomeContent({ events, galleryImages, latestProject }: { 
                 </div>
             </section>
 
-            {/* Impact Dashboard Section */}
-            <ImpactSection />
+            {/* Trusted Partners Marquee */}
+            <PartnersMarquee />
 
             {/* Featured Project Section */}
             {latestProject && (
@@ -168,8 +170,8 @@ export default function HomeContent({ events, galleryImages, latestProject }: { 
                 </section>
             )}
 
-            {/* Gallery Carousel Section */}
-            <GalleryCarousel images={galleryImages} />
+            {/* Impact Dashboard Section */}
+            <ImpactSection />
 
             {/* Upcoming Events Section */}
             <section className={`section ${styles.projectSection}`}>
@@ -240,6 +242,12 @@ export default function HomeContent({ events, galleryImages, latestProject }: { 
                     </motion.div>
                 </div>
             </section>
+
+            {/* Gallery Carousel Section */}
+            <GalleryCarousel images={galleryImages} />
+
+            {/* Community Voices Testimonials */}
+            <TestimonialCarousel />
 
             {/* CTA Section */}
             <section className={styles.ctaSection}>

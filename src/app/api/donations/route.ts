@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { verifyAuth } from "@/lib/auth";
 
 // GET public settings
 export async function GET() {
@@ -25,8 +26,8 @@ export async function GET() {
 
 // PUT strictly for Admin to update bank details
 export async function PUT(request: NextRequest) {
-    // In a real app we would verify the JWT token here as well if not handled by middleware
     try {
+        await verifyAuth('manage_donations');
         const body = await request.json();
 
         let settings = await prisma.donationSettings.findFirst();

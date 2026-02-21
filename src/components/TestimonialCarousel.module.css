@@ -1,0 +1,143 @@
+.carouselContainer {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    padding: var(--spacing-xl) 0;
+}
+
+.title {
+    text-align: center;
+    color: var(--primary);
+    margin-bottom: var(--spacing-xxl);
+    font-size: 2.5rem;
+}
+
+.viewport {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    padding: 20px;
+}
+
+.testimonialCard {
+    background-color: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-xl);
+    box-shadow: var(--shadow-lg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--spacing-md);
+    position: relative;
+}
+
+.quoteIcon {
+    color: rgba(224, 122, 95, 0.2);
+    margin-bottom: -20px;
+    z-index: 0;
+}
+
+.quote {
+    font-size: 1.25rem;
+    font-style: italic;
+    color: var(--text-primary);
+    line-height: 1.6;
+    z-index: 1;
+    position: relative;
+}
+
+.authorInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-top: var(--spacing-md);
+}
+
+.avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid white;
+    box-shadow: var(--shadow-sm);
+}
+
+.avatarPlaceholder {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: var(--secondary);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: 600;
+    border: 3px solid white;
+    box-shadow: var(--shadow-sm);
+}
+
+.authorName {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--primary);
+}
+
+.authorRole {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-lg);
+}
+
+.controlBtn {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--primary);
+    transition: all var(--transition-short);
+    box-shadow: var(--shadow-sm);
+}
+
+.controlBtn:hover {
+    background: var(--primary);
+    color: white;
+    transform: scale(1.1);
+}
+
+.indicators {
+    display: flex;
+    gap: 8px;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: all var(--transition-short);
+}
+
+.dotActive {
+    background-color: var(--primary);
+    transform: scale(1.3);
+}

@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { FiCalendar, FiImage, FiLogOut, FiHome, FiHeart, FiTarget, FiLayers, FiMail, FiPhone, FiBarChart2, FiUsers, FiMenu, FiX } from 'react-icons/fi';
+import { FiCalendar, FiImage, FiLogOut, FiHome, FiHeart, FiTarget, FiLayers, FiMail, FiPhone, FiBarChart2, FiUsers, FiMenu, FiX, FiSmile, FiMessageCircle, FiGlobe } from 'react-icons/fi';
 import styles from './admin.module.css';
 
 export default function AdminLayout({
@@ -40,13 +40,16 @@ export default function AdminLayout({
     const navItems = [
         { href: '/admin/events', label: 'Manage Events', icon: FiCalendar, permission: 'manage_events' },
         { href: '/admin/gallery', label: 'Manage Gallery', icon: FiImage, permission: 'manage_gallery' },
-        { href: '/admin/donations', label: 'Manage Donations', icon: FiHeart },
         { href: '/admin/projects', label: 'Manage Projects', icon: FiTarget, permission: 'manage_projects' },
+        { href: '/admin/impact', label: 'Impact Dashboard', icon: FiBarChart2, permission: 'manage_impact' },
+        { href: '/admin/donations', label: 'Manage Donations', icon: FiHeart, permission: 'manage_donations' },
+        { href: '/admin/messages', label: 'Inquiries', icon: FiMail, permission: 'manage_messages' },
+        { href: '/admin/volunteers', label: 'Volunteers', icon: FiSmile, permission: 'manage_volunteers' },
+        { href: '/admin/testimonials', label: 'Testimonials', icon: FiMessageCircle, permission: 'manage_testimonials' },
+        { href: '/admin/partners', label: 'Trusted Partners', icon: FiGlobe, permission: 'manage_partners' },
         { href: '/admin/about', label: 'Manage About Us', icon: FiImage },
         { href: '/admin/contact', label: 'Contact Info', icon: FiPhone },
-        { href: '/admin/impact', label: 'Impact Dashboard', icon: FiBarChart2 },
         { href: '/admin/headers', label: 'Page Headers', icon: FiLayers },
-        { href: '/admin/messages', label: 'Inquiries', icon: FiMail },
         { href: '/admin/users', label: 'User Management', icon: FiUsers },
     ];
 
