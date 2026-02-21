@@ -43,6 +43,13 @@ export default function HomeContent({ events, galleryImages, latestProject }: { 
 
     return (
         <main className={styles.main}>
+            {/* Dynamic Background */}
+            <div className={styles.backgroundGraphics}>
+                <div className={`${styles.blob} ${styles.primaryBlob}`}></div>
+                <div className={`${styles.blob} ${styles.secondaryBlob}`}></div>
+                <div className={`${styles.blob} ${styles.accentBlob}`}></div>
+            </div>
+
             {/* Hero Section */}
             <section className={styles.hero}>
                 <div className={styles.heroBackground}>
