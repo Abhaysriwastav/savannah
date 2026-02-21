@@ -60,7 +60,13 @@ export default function AdminLayout({
         <div className={styles.adminContainer}>
             {/* Mobile Header */}
             <div className={styles.mobileHeader}>
-                <h2>Admin Portal</h2>
+                <Link href="/" className={styles.logoWrapper}>
+                    <img src="/logo.png" alt="Savannah Logo" width={32} height={32} style={{ objectFit: 'contain' }} />
+                    <div className={styles.logoText}>
+                        <span className={styles.primaryText}>Savannah</span>
+                        <span className={styles.secondaryText}>Admin</span>
+                    </div>
+                </Link>
                 <button className={styles.mobileMenuBtn} onClick={() => setIsMobileOpen(!isMobileOpen)}>
                     {isMobileOpen ? <FiX size={24} /> : <FiMenu size={24} />}
                 </button>
@@ -69,9 +75,12 @@ export default function AdminLayout({
             {/* Sidebar Navigation */}
             <aside className={`${styles.sidebar} ${isMobileOpen ? styles.sidebarOpen : ''}`}>
                 <div className={styles.sidebarHeader}>
-                    <h2>Admin Portal</h2>
-                    <Link href="/" className={styles.homeLink}>
-                        <FiHome /> Back to Site
+                    <Link href="/" className={styles.logoWrapper}>
+                        <img src="/logo.png" alt="Savannah Logo" width={40} height={40} style={{ objectFit: 'contain' }} />
+                        <div className={styles.logoText}>
+                            <span className={styles.primaryText}>Savannah</span>
+                            <span className={styles.secondaryText}>Admin</span>
+                        </div>
                     </Link>
                 </div>
                 <nav className={styles.sidebarNav}>
