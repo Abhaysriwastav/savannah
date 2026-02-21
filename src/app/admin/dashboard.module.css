@@ -490,3 +490,85 @@
         margin-left: 0;
     }
 }
+
+@media (max-width: 768px) {
+    .dashboardContainer {
+        padding: 1rem;
+        margin: 0.5rem;
+        border-radius: 20px;
+    }
+
+    .topStats {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.5rem;
+        width: 100%;
+    }
+
+    .largeStats {
+        flex-wrap: wrap;
+        gap: 1.5rem;
+        justify-content: flex-start;
+        width: 100%;
+    }
+
+    .largeStatValue {
+        font-size: 2rem;
+    }
+
+    .middleTopRow {
+        grid-template-columns: 1fr;
+    }
+
+    .chartBars {
+        overflow-x: auto;
+        padding-bottom: 0.5rem;
+    }
+
+    .chartBarCol {
+        min-width: 30px;
+    }
+
+    .eventList {
+        gap: 0.5rem;
+    }
+
+    .eventCard {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .greeting h1 {
+        font-size: 1.75rem;
+    }
+
+    .card {
+        padding: 1rem;
+        border-radius: 16px;
+    }
+
+    .profileCard {
+        height: 250px;
+    }
+
+    .taskListCard {
+        padding: 1.5rem;
+        border-radius: 20px;
+    }
+
+    .largeStatValue {
+        font-size: 1.5rem;
+    }
+
+    .progressItem {
+        width: 100%;
+    }
+
+    .progressBar {
+        width: 100%;
+        max-width: none;
+    }
+}

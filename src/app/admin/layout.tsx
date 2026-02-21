@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { FiCalendar, FiImage, FiLogOut, FiHome, FiHeart, FiTarget, FiLayers, FiMail, FiPhone, FiBarChart2, FiUsers } from 'react-icons/fi';
+import { FiCalendar, FiImage, FiLogOut, FiHome, FiHeart, FiTarget, FiLayers, FiMail, FiPhone, FiBarChart2, FiUsers, FiMenu, FiX } from 'react-icons/fi';
 import styles from './admin.module.css';
 
 export default function AdminLayout({
@@ -14,6 +14,12 @@ export default function AdminLayout({
     const pathname = usePathname();
     const [userRole, setUserRole] = useState<string | null>(null);
     const [userPermissions, setUserPermissions] = useState<string[]>([]);
+    const [isMobileOpen, setIsMobileOpen] = useState(false);
+
+    // Close mobile menu on route change
+    useEffect(() => {
+        setIsMobileOpen(false);
+    }, [pathname]);
 
     useEffect(() => {
         const fetchUserPermissions = async () => {
@@ -46,21 +52,29 @@ export default function AdminLayout({
 
     const visibleNavItems = navItems.filter(item => {
         if (userRole === 'superadmin') return true; // Superadmin sees all
-        if (!item.permission) return false; // Editor CANNOT see items without explicit permission mapping (the superadmin only routes)
+        if (!item.permission) return false; // Editor CANNOT see items without explicit permission mapping
         return userPermissions.includes(item.permission);
     });
 
     return (
         <div className={styles.adminContainer}>
+            {/* Mobile Header */}
+            <div className={styles.mobileHeader}>
+                <h2>Admin Portal</h2>
+                <button className={styles.mobileMenuBtn} onClick={() => setIsMobileOpen(!isMobileOpen)}>
+                    {isMobileOpen ? <FiX size={24} /> : <FiMenu size={24} />}
+                </button>
+            </div>
+
             {/* Sidebar Navigation */}
-            <aside className={styles.sidebar}>
+            <aside className={`${styles.sidebar} ${isMobileOpen ? styles.sidebarOpen : ''}`}>
                 <div className={styles.sidebarHeader}>
                     <h2>Admin Portal</h2>
                     <Link href="/" className={styles.homeLink}>
                         <FiHome /> Back to Site
                     </Link>
                 </div>
-                <nav className={styles.navigation}>
+                <nav className={styles.sidebarNav}>
                     {visibleNavItems.map((item) => {
                         const Icon = item.icon;
                         const isActive = pathname.startsWith(item.href);
@@ -93,6 +107,11 @@ export default function AdminLayout({
                     </Link>
                 </nav>
             </aside>
+
+            {/* Mobile Overlay */}
+            {isMobileOpen && (
+                <div className={styles.mobileOverlay} onClick={() => setIsMobileOpen(false)}></div>
+            )}
 
             {/* Main Content Area */}
             <main className={styles.mainContent}>
